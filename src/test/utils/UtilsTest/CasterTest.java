@@ -1,6 +1,7 @@
 package utils.UtilsTest;
 
 
+import junit.framework.Assert;
 import org.junit.Test;
 import utils.Caster;
 
@@ -18,14 +19,13 @@ import java.util.Map;
 public class CasterTest{
     @Test
     public void simpleTest() {
-        System.out.println("test");
         Caster c = new Caster();
+
         Map<String, String> m = new HashMap<String, String>();
-        m.put("a","b");
-        m.put("ee","rr");
-        m.put("aa","ss");
+        m.put("a", "b");
+        m.put("22", "33");
         String s[] = Caster.castKeysToStrings(m);
-        System.out.println(Arrays.toString(s));
+        Assert.assertTrue("Неправильное количество" ,s.length == 2);
     }
 
 }
