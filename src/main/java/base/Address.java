@@ -10,9 +10,10 @@ public class Address{
 		this.abonentId=abonentIdCreator.incrementAndGet();
 	}
 
-	public int getAbonentId(){
-		return abonentId;
-	}
+    // never used
+//	public int getAbonentId(){
+//		return abonentId;
+//	}
 
 	public int hashCode(){
 		return abonentId;
