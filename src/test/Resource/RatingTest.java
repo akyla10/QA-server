@@ -13,5 +13,6 @@ public class RatingTest {
     public void simpleTest() {
         Rating r = new Rating();
         Assert.assertTrue(true);
+//        TODO: Убрать это нахер
     }
 }
