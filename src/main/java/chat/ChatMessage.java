@@ -7,14 +7,15 @@ public class ChatMessage {
 		this.sender=sender;
 		this.text=text;
 	}
-	
-	public String getSender(){
-		return sender;
-	}
-	
-	public String getMessage(){
-		return text;
-	}
+
+    // never used
+//	public String getSender(){
+//		return sender;
+//	}
+//
+//	public String getMessage(){
+//		return text;
+//	}
 	
 	public String json(){
 		return ("{\"sender\":\""+sender+"\",\"text\":\""+text+"\"}");
