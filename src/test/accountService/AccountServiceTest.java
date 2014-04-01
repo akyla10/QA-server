@@ -14,7 +14,7 @@ import org.junit.Test;
  */
 public class AccountServiceTest {
     AccountServiceImpl asi;
-    int firstId, arbitraryId;
+    int firstId, existingId;
 
     @Before
     public void setUp() {
@@ -28,9 +28,9 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void testGetArbitraryUserId() throws Exception {
+    public void testGetExistingUserId() throws Exception {
         firstId = asi.getUserId("nickname1", "passwd123");
-        arbitraryId = asi.getUserId("nickname2", "qwerty000");
-        Assert.assertTrue(firstId != arbitraryId);
+        existingId = asi.getUserId("nickname1", "passwd123");
+        Assert.assertTrue(firstId == existingId);
     }
 }
