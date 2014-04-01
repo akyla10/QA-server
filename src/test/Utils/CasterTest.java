@@ -1,17 +1,10 @@
-package utils.UtilsTest;
+package Utils;
 
 
 import junit.framework.Assert;
 import org.junit.Test;
 import utils.Caster;
 
-import java.util.*;
-
-import org.junit.Test;
-import utils.Caster;
-
-import java.lang.Exception;
-import java.lang.System;
 import java.util.HashMap;
 import java.util.Map;
 
