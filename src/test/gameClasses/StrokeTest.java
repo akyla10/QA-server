@@ -36,13 +36,13 @@ public class StrokeTest {
     public void isEmptyTrue() {
         stroke = new Stroke(1,10,1,10,"");
         Assert.assertFalse(stroke.isEmpty());
-        stroke.fullSet(1,1,1,-1);
+        stroke.fullSet(-1,-1,-1,1);
         Assert.assertFalse(stroke.isEmpty());
-        stroke.fullSet(1,-1,1,1);
-        Assert.assertFalse(stroke.isEmpty());
-        stroke.fullSet(1,1,-1,1);
+        stroke.fullSet(-1,-1,1,1);
         Assert.assertFalse(stroke.isEmpty());
         stroke.fullSet(-1,1,1,1);
+        Assert.assertFalse(stroke.isEmpty());
+        stroke.fullSet(1,1,1,1);
         Assert.assertFalse(stroke.isEmpty());
     }
 
@@ -51,5 +51,12 @@ public class StrokeTest {
     public void isEmptyFalse() {
         stroke = new Stroke(-1,-1,-1,-1,"", "w" );
         Assert.assertTrue(stroke.isEmpty());
+    }
+
+    public void CopyConstructorTest() {
+        stroke = new Stroke(1,10,1,10,"", "w");
+        Stroke stroke1 = new Stroke(stroke);
+        Assert.assertEquals(stroke1.getColor(), "w");
+
     }
 }
