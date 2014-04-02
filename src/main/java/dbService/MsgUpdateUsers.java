@@ -2,8 +2,6 @@ package dbService;
 
 import java.util.List;
 
-import dbService.UserDataSet;
-
 import base.Address;
 import base.DataAccessObject;
 import messageSystem.MsgToDBService;
@@ -14,7 +12,8 @@ public class MsgUpdateUsers extends MsgToDBService{
 		super(from, to);
 		this.users=users;
 	}
-	public void exec(DataAccessObject dbService){
+	public UserDataSet exec(DataAccessObject dbService){
 		dbService.updateUsers(users);
-	}
+        return null;
+    }
 }

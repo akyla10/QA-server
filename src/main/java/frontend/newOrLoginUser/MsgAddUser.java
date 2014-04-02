@@ -18,7 +18,7 @@ public class MsgAddUser extends MsgToDBService{
 		this.password=password;
 	}
 
-	public void exec(DataAccessObject dbService){
+	public UserDataSet exec(DataAccessObject dbService){
 		UserDataSet uds=null;
 		if (dbService.addUDS(login, password)){
 			uds=dbService.getUDS(login, password);
@@ -26,5 +26,6 @@ public class MsgAddUser extends MsgToDBService{
 		Address to=getFrom();
 		MsgUpdateUser msg=new MsgUpdateUser(dbService.getAddress(),to,sessionId,uds);
 		dbService.getMessageSystem().putMsg(to, msg);
+        return uds;
 	}
 }

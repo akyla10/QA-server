@@ -4,6 +4,7 @@ import base.Abonent;
 import base.Address;
 import base.DataAccessObject;
 import base.Msg;
+import dbService.UserDataSet;
 
 
 public abstract class MsgToDBService extends Msg{
@@ -17,5 +18,5 @@ public abstract class MsgToDBService extends Msg{
 			exec((DataAccessObject)abonent);
 		}
 	}
-	public abstract void exec(DataAccessObject dbService);
+	public abstract UserDataSet exec(DataAccessObject dbService);
 }
