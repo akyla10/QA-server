@@ -26,12 +26,6 @@
                     <mainClass>main.Main</mainClass>
                 </configuration>
             </plugin>
-            <plugin>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <configuration>
-                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-                </configuration>
-            </plugin>
 
         </plugins>
     </build>
@@ -127,6 +121,13 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.5.2</version>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <configuration>
+                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                </configuration>
             </plugin>
         </plugins>
     </reporting>
