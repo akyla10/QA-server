@@ -70,7 +70,7 @@ public class GameMechanicImpl implements GameMechanic{
 		}
 	}
 
-	private void createGame(String sessionIdWhite, String sessionIdBlack, 
+	public void createGame(String sessionIdWhite, String sessionIdBlack,
 			Map<String, String> sessionIdToColor, Map<String, UserDataSet> users){
 		int userIdWhite=users.get(sessionIdWhite).getId();
 		int userIdBlack=users.get(sessionIdBlack).getId();
@@ -111,6 +111,7 @@ public class GameMechanicImpl implements GameMechanic{
 		String[] keys = Caster.castKeysToStrings(users);
 		for(int count=0;count<users.size()/2;count++){
 			if(randomMod2()==1){
+//                TODO: переписать в то, что выше, как параметр
 				sessionIdBlack = keys[count*2];
 				sessionIdWhite = keys[count*2+1];
 			}
@@ -181,7 +182,7 @@ public class GameMechanicImpl implements GameMechanic{
 		messageSystem.putMsg(to, msg);
 	}
 	
-	private void removeDeadGames(){
+	public void removeDeadGames(){
 		Object[] keys=userIdToSession.keySet().toArray();
 		int count,winnerId;
 		GameSession gameSession;
