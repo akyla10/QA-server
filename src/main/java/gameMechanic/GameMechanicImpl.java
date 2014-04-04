@@ -48,7 +48,7 @@ public class GameMechanicImpl implements GameMechanic{
 		return (((int)(Math.random()*1000))%2);
 	}
 
-	private void removeRepeatUsers(Map<String, UserDataSet> users){
+	void removeRepeatUsers(Map<String, UserDataSet> users){
 		String[] wantToPlayKeys = Caster.castKeysToStrings(wantToPlay);
 		if(wantToPlayKeys.length>0){
 			users.put(wantToPlayKeys[0], wantToPlay.get(wantToPlayKeys[0]));
@@ -56,7 +56,7 @@ public class GameMechanicImpl implements GameMechanic{
 		}
 	}
 
-	private void removeAlreadyInGameUsers(Map<String, UserDataSet> users){
+	void removeAlreadyInGameUsers(Map<String, UserDataSet> users){
 		String sessionId;
 		int userId;
 		String[] keys = Caster.castKeysToStrings(users);
@@ -111,7 +111,7 @@ public class GameMechanicImpl implements GameMechanic{
 		String[] keys = Caster.castKeysToStrings(users);
 		for(int count=0;count<users.size()/2;count++){
 			if(randomMod2()==1){
-//                TODO: переписать в то, что выше, как параметр
+//                TODO: спросить у Влада, что с этим делать.
 				sessionIdBlack = keys[count*2];
 				sessionIdWhite = keys[count*2+1];
 			}

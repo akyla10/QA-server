@@ -33,11 +33,13 @@ public class GameSession{
 	
 	public GameSession(int id1, int id2){
 		settings = (GameSettings) ResourceFactory.instanse().getResource("settings/gameSettings.xml");
+
 		descInit(id1, id2);
 	}
 
 	public GameSession(int id1, int id2,int fieldSize, int playerSize){
 		settings = new GameSettings(fieldSize,playerSize);
+
 		descInit(id1, id2);
 	}
 
@@ -80,7 +82,7 @@ public class GameSession{
 		currentPositions[y][x]=new Field(field);
 	}
 
-	private checker getAnotherColor(checker myColor){
+	checker getAnotherColor(checker myColor){
 		if(myColor==checker.black)
 			return checker.white;
 		else if(myColor==checker.white)
@@ -167,7 +169,7 @@ public class GameSession{
 		return ans;
 	}
 	
-	private Field getField(int x, int y){
+	Field getField(int x, int y){
 		return currentPositions[y][x];
 	}
 	
@@ -566,5 +568,7 @@ public class GameSession{
 	public int getBlackQuantity(){
 		return blackQuantity;
 	}
+
+    public int getId() { return id; }
 }
 //Черная клетка, если координаты один. четности
