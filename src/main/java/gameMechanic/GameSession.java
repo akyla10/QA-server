@@ -397,8 +397,8 @@ public class GameSession{
 	private int abs(int number){
 		return Math.abs(number);
 	}
-	
-	private int normal(int number){
+
+    int normal(int number){
 		if(number==0)
 			return 0;
 		else
@@ -572,7 +572,7 @@ public class GameSession{
 			return 'w';
 	}
 
-	public int[] getFields(){
+    public int[] getFields(){
 		int[] fields = new int[blackQuantity+whiteQuantity];
 		int number=0;
 		for(int y=0;y<settings.getFieldSize();y++){
@@ -607,6 +607,10 @@ public class GameSession{
     int getBlackId() { return blackId; }
 
     int getLastStroke() { return lastStroke; }
+
+    int getBlackQuantity() { return blackQuantity; };
+
+    int getWhiteQuantity() { return whiteQuantity; };
 
     Field[][] getCurrentPositions() {return currentPositions;}
 

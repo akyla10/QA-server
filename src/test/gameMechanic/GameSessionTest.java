@@ -115,14 +115,6 @@ public class GameSessionTest {
     }
 
     @Test
-    public void getFieldsTest(){
-        gameSession = new GameSession(1, 2, 4,2);
-        Field.checker checker = gameSession.getAnotherColor(Field.checker.nothing);
-        int fields[] = gameSession.getFields();
-//        TODO: Запилить тут тест
-    }
-
-    @Test
     public void CommonTest(){
         gameSession = new GameSession(1, 2, 8, 3);
                 Assert.assertEquals(
@@ -357,8 +349,19 @@ public class GameSessionTest {
     public void snapshotWhiteTest() {
         gameSession = new GameSession(1, 2, 8, 3);
         Assert.assertEquals(
+                "Не тот снимок",
+                "{\"status\":\"snapshot\",\"next\":\"w\",\"color\":\"w\",\"field\":[[\"white\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\"], [\"nothing\", \"white\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\", \"white\"], [\"white\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\"], [\"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\"], [\"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\"], [\"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\"], [\"black\", \"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\", \"nothing\"], [\"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\"]],\"king\":[[\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"]]}",
+                gameSession.getSnapshot(1).toString()
+        );
+    }
+
+    @Test
+    public void snapshotWhiteCurrentBlackTest() {
+        gameSession = new GameSession(1, 2, 8, 3);
+        Assert.assertTrue(gameSession.checkStroke(1, 0, 5, 1, 4));
+        Assert.assertEquals(
             "Не тот снимок",
-            "{\"status\":\"snapshot\",\"next\":\"w\",\"color\":\"w\",\"field\":[[\"white\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\"], [\"nothing\", \"white\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\", \"white\"], [\"white\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\"], [\"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\"], [\"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\"], [\"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\"], [\"black\", \"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\", \"nothing\"], [\"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\"]],\"king\":[[\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"]]}",
+            "{\"status\":\"snapshot\",\"next\":\"b\",\"color\":\"w\",\"field\":[[\"white\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\"], [\"nothing\", \"white\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\", \"white\"], [\"nothing\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\", \"white\", \"nothing\"], [\"nothing\", \"white\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\"], [\"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\", \"nothing\"], [\"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\"], [\"black\", \"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\", \"nothing\"], [\"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\", \"nothing\", \"black\"]],\"king\":[[\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"], [\"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"false\"]]}",
             gameSession.getSnapshot(1).toString()
         );
     }
@@ -433,6 +436,208 @@ public class GameSessionTest {
         field[2][2].setType(white);
         field[2][2].makeKing();
         gameSession = new GameSession(1,2,field);
-        Assert.assertTrue( gameSession.checkStroke(1,2,5,4,3) );
+        Assert.assertTrue(gameSession.checkStroke(1, 2, 5, 4, 3));
+    }
+
+    @Test
+    public void cantCommonStrokeWhenCanEat() {
+        Field[][] field = getEmptyField(8);
+        field[3][3].setType(black);
+        field[2][2].setType(white);
+        field[6][0].setType(white);
+        gameSession = new GameSession(1,2,field);
+        Assert.assertFalse(
+                "Разрешено делать обычный ход вместо удара",
+                gameSession.checkStroke(1, 0, 1, 1, 0)
+        );
+    }
+
+    @Test
+    public void PawnLeftBottomEatTest() {
+        Field[][] field = getEmptyField(8);
+        field[2][2].setType(black);
+        field[3][3].setType(white);
+        gameSession = new GameSession(1,2,field);
+        Assert.assertTrue(
+                "Не получается ударить шашку сзади слева",
+                gameSession.checkStroke(1, 3, 4, 1, 6)
+        );
+    }
+
+    @Test
+    public void PawnRightBottomEatTest() {
+        Field[][] field = getEmptyField(8);
+        field[2][4].setType(black);
+        field[3][3].setType(white);
+        gameSession = new GameSession(1,2,field);
+        Assert.assertTrue(
+                "Не получается ударить шашку сзади справа",
+                gameSession.checkStroke(1, 3, 4, 5, 6)
+        );
+    }
+
+    @Test
+    public void checkNobodyWon() {
+        gameSession = new GameSession(1,2,8,3);
+        Assert.assertEquals(
+                "Никто пока не побеждает",
+                0,
+                gameSession.getWinnerId()
+        );
+    }
+
+    @Test
+    public void checkWhiteWonCourseThereNoBlacks() {
+        Field[][] field = getEmptyField(8);
+        field[5][5].setType(white);
+        gameSession = new GameSession(1,2, field);
+        Assert.assertEquals(
+                "Белые не победили",
+                1,
+                gameSession.getWinnerId()
+        );
+    }
+
+    @Test
+    public void checkBlackWonCourseThereNoWhites() {
+        Field[][] field = getEmptyField(8);
+        field[5][5].setType(black);
+        gameSession = new GameSession(1,2, field);
+        Assert.assertEquals(
+                "Черные не победили",
+                2,
+                gameSession.getWinnerId()
+        );
+    }
+
+    @Test
+    public void checkLogNoteWhite() {
+        gameSession = new GameSession(1,2);
+        Assert.assertEquals(
+                "Белые не победили",
+                "white",
+                gameSession.saveLog(1)
+        );
+    }
+
+    @Test
+    public void checkLogNoteBlock() {
+        gameSession = new GameSession(1,2);
+        Assert.assertEquals(
+                "Черные не победили",
+                "black",
+                gameSession.saveLog(2)
+        );
+    }
+
+    @Test
+    public void checkWhiteWonCourseBlacksAreBlocked() {
+        Field[][] field = getEmptyField(8);
+        field[7][7].setType(black);
+        field[6][6].setType(white);
+        field[4][4].setType(white);
+        gameSession = new GameSession(1,2, field);
+        gameSession.checkStroke(1, 4, 3, 5, 2);
+        Assert.assertEquals(
+                "Белые не победили",
+                1,
+                gameSession.getWinnerId()
+        );
+    }
+
+    @Test
+    public void checkBlackWonCourseWhitesAreBlocked() {
+        Field[][] field = getEmptyField(8);
+        field[0][0].setType(white);
+        field[1][1].setType(black);
+        field[2][2].setType(black);
+        gameSession = new GameSession(1,2, field);
+        Assert.assertEquals(
+                "Черные не победили",
+                2,
+                gameSession.getWinnerId()
+        );
+    }
+
+    @Test
+    public void testNormalZero() {
+        gameSession = new GameSession(1,2);
+        Assert.assertEquals(0, gameSession.normal(0));
+    }
+
+    @Test
+    public void AssertQuantityDecrement() {
+        Field[][] field = getEmptyField(8);
+        field[7][7].setType(black);
+        field[5][5].setType(white);
+        gameSession = new GameSession(1,2, field);
+        gameSession.checkStroke(1,5,2,6,1);
+        gameSession.checkStroke(2,0,7,2,5);
+        Assert.assertEquals(0, gameSession.getWhiteQuantity());
+    }
+
+    @Test
+    public void lMoveByKingTest() {
+        Field[][] field = getEmptyField(8);
+        field[0][4].setType(white);
+        field[0][4].makeKing();
+        field[7][3].setType(black);
+        gameSession = new GameSession(1,2,field);
+        gameSession.checkStroke(1, 4, 7, 6, 5);
+    }
+
+    @Test
+    public void checkWhiteBecomingKing() {
+        Field[][] field = getEmptyField(8);
+        field[6][4].setType(white);
+        gameSession = new GameSession(1,2,field);
+        gameSession.checkStroke(1, 4, 1, 5, 0);
+        Assert.assertTrue(gameSession.getCurrentPositions()[7][5].isKing());
+    }
+
+    @Test
+    public void checkBlackBecomingKing() {
+        Field[][] field = getEmptyField(8);
+        field[6][4].setType(white);
+        field[1][3].setType(black);
+        gameSession = new GameSession(1,2,field);
+        gameSession.checkStroke(1, 4, 1, 5, 0);
+        gameSession.checkStroke(2, 4, 1, 5, 0);
+        Assert.assertTrue(gameSession.getCurrentPositions()[0][2].isKing());
+    }
+
+    @Test
+    public void getFieldsTest() {
+        Field[][] field = getEmptyField(8);
+        field[0][6].setType(white);
+        field[1][1].setType(black);
+        field[4][4].setType(black);
+        field[7][1].setType(black);
+        field[6][4].setType(white);
+        gameSession = new GameSession(1,2,field);
+        gameSession.checkStroke(1, 4, 1, 5, 0);
+        gameSession.checkStroke(2, 6, 1, 7, 0);
+        int[] sample = {6,-61,0,36,57};
+        int[] fields = gameSession.getFields();
+        for (int i = 0; i < sample.length; i++)
+            Assert.assertEquals(
+                    sample[i],
+                    fields[i]
+            );
+
+    }
+
+    @Test
+    public void overBoardMoveTest() {
+        Field[][] field = getEmptyField(8);
+        field[5][5].setType(white);
+        field[5][5].makeKing();
+        gameSession = new GameSession(1,2,field);
+        Assert.assertFalse( gameSession.checkStroke(1,5,2,8,-1) );
+        Assert.assertFalse( gameSession.checkStroke(1,5,2,2,-1) );
+        Assert.assertFalse( gameSession.checkStroke(1,5,2,9, 6) );
+        Assert.assertFalse( gameSession.checkStroke(1,5,2, -10 , 17 ) );
+        print(white);
+
     }
 }
