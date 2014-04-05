@@ -246,6 +246,10 @@ public class GameSession{
 		if(canEat(myColor)){
 			return false;
 		}
+        if(!fieldIsKing(from_x, from_y)) {
+            if (to_y - from_y != (myColor == checker.white ? 1 : -1 ) )
+                return false;
+        }
 		move(from_x, from_y, to_x, to_y);
 		if(becameKing(to_x, to_y)){
 			makeKing(to_x, to_y);
@@ -270,7 +274,7 @@ public class GameSession{
 		return currentPositions[y][x].getType();
 	}
 
-	private boolean canEat(int x, int y){
+	boolean canEat(int x, int y){
 		if(fieldIsKing(x,y))
 			return kingCanEat(x,y);
 		else
@@ -551,15 +555,14 @@ public class GameSession{
 		VFS.writeToFile(fileName, data);
 	}
 	
-	public void saveLog(int winnerId){
-		if(winnerId==blackId)
-			saveAILog("black");
-		else
-			saveAILog("white");
+	public String saveLog(int winnerId){
+        String forLog = winnerId==blackId ? "black" : "white";
+	    saveAILog(forLog);
 		String fileName="/log/"+dirForLog+"/"+String.valueOf(id)+".txt";
 		String data=log.toString()+"\n"+getSnapshot(whiteId).toStringTest();
 		VFS.writeToFile(fileName, data);
 		System.out.println("\nSave log for "+String.valueOf(id));
+        return forLog;
 	}
 
 	public char getNext(){
