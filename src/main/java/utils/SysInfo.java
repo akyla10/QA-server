@@ -23,9 +23,9 @@ public class SysInfo implements Runnable{
 	}
 
 	public void run(){
-		for(String service:data.keySet()){
+        for(String service:data.keySet()){
 			lastDate=TimeHelper.getTime();
-			if(service.equals("MemoryUsage")){
+            if(service.equals("MemoryUsage")){
 				VFS.writeToFile(data.get(service), String.valueOf((int) (runtime.totalMemory()-runtime.freeMemory())));
 			}
 			else if(service.equals("TotalMemory")){
