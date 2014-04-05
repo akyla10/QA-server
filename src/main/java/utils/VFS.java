@@ -11,53 +11,37 @@ import java.util.Queue;
 public class VFS{
 	private static String dir=System.getProperty("user.dir")+'/';
 
-	public static boolean isExist(String path){
-		File f = new File(System.getProperty("user.dir") + path);
-		return f.exists();
-	}
-
-	public static boolean isFile(String path){
-		File f = new File(System.getProperty("user.dir") + path);
-		return f.isFile();		
-	}
-
 	public static String getAbsolutePath(String path){
 		if(isAbsolute(path))
-			return path;
+			return normalizePath(path);
 		else
-			return (dir+path);
-	}
-
-	public static String getBytes(String path) {
-		path=getAbsolutePath(path);
-		try {
-			File f = new File(path);
-			FileReader fr = new FileReader(f);
-			char[] buffer = null;		
-			fr.read(buffer);
-			fr.close();
-			return String.valueOf(buffer);
-		}
-		catch (Exception e) {
-			System.err.println("\nError");
-			System.err.println("VFS, getBytes");
-			System.err.println(e.getMessage());
-		}
-		return null;	
+			return normalizePath(dir+path);
 	}
 
 	public static String getRelativePath(String path){
 		if(isAbsolute(path)){
-			return path.substring(dir.length());
+			return normalizePath(path.substring(dir.length()));
 		}
 		else{
-			return path;
+			return normalizePath(path);
 		}
 	}
 
 	private static boolean isAbsolute(String path){
 		return path.startsWith(dir);
 	}
+
+    public static String normalizePath(String path) {
+        String res = path;
+        if(path.charAt(0) != '/') res = '/' + path;
+        if(path.length()>1) {
+            for(int i=0; i < path.length() - 1; i++) {
+                if(path.charAt(i) == '/' && path.charAt(i+1) == '/')
+                    res = res.substring(0,i) + res.substring(i+1,res.length());
+            }
+        }
+        return res;
+    }
 
 	public static List<File> bfs(String path){
 		path=getAbsolutePath(path);
@@ -90,7 +74,7 @@ public class VFS{
 		} catch (Exception e) {
 			System.err.println("\nError");
 			System.err.println("VFS, writeToFile1");
-			System.err.println(e.getMessage());
+			//System.err.println(e.getMessage());
 		}
 		finally{
 			if(fw!=null){
