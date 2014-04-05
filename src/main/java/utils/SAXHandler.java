@@ -12,12 +12,13 @@ public class SAXHandler extends DefaultHandler {
 	
 	public void startElement(String uri, String localName, String qName, Attributes attributes) {
 		lastElement=qName;
-		if(qName != CLASSNAME)
-			inElement = true;
+        if(!qName.equals(CLASSNAME)) {
+            inElement = true;
+        }
 		else{
-			String className = attributes.getValue(0);
-			object=ReflectionHelper.createInstance(className);
-		}
+            String className = attributes.getValue(0);
+            object=ReflectionHelper.createInstance(className);
+        }
 	}
 
 	public void endElement(String uri, String localName, String qName) {
@@ -27,7 +28,7 @@ public class SAXHandler extends DefaultHandler {
 
 	public void characters(char ch[], int start, int length) {
 		if(inElement){
-			String value=new String(ch, start, length);
+            String value=new String(ch, start, length);
 			ReflectionHelper.setFieldValue(object, lastElement, value);
 		}
 	}

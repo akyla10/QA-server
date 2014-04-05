@@ -6,11 +6,10 @@ public class ReflectionHelper{
 	
 	public static Object createInstance(String className){
 		try{
-			return Class.forName(className).newInstance();
+            return Class.forName(className).newInstance();
 		}
 		catch(Exception e){
-			System.err.println("ReflectionHelper, createInstance");
-			System.err.println(e.getMessage());
+           // e.printStackTrace();
 		}
 		return null;
 	}
