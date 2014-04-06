@@ -3,6 +3,7 @@ package gameMechanic;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.tools.ant.taskdefs.Java;
 import resource.GameSettings;
 import resource.ResourceFactory;
 
@@ -33,11 +34,48 @@ public class GameSession{
 	
 	public GameSession(int id1, int id2){
 		settings = (GameSettings) ResourceFactory.instanse().getResource("settings/gameSettings.xml");
+        if (id1 == 0) {
+            id1 = id;
+        }
+        if (id2 == 0) {
+            id2 = id;
+        }
 		descInit(id1, id2);
 	}
 
+//    Этот конструктор используется главным образом для тестов
+//    В нем важно следить за тем, чтобы передавалось верное количество шашек
+    GameSession(int id1, int id2, Field field[][]) {
+        settings = (GameSettings) ResourceFactory.instanse().getResource("settings/gameSettings.xml");
+//        if (id1 == 0) {
+//            id1 = id;
+//        }
+//        if (id2 == 0) {
+//            id2 = id;
+//        }
+        currentPositions = field;
+        blackQuantity = 0;
+        whiteQuantity = 0;
+        for (int i = 0; i < currentPositions.length; i++)
+            for (int j = 0; j < currentPositions[i].length; j++) {
+                if(currentPositions[i][j].getType() == checker.white )
+                    whiteQuantity++;
+                if(currentPositions[i][j].getType() == checker.black)
+                    blackQuantity++;
+            }
+        whiteId=id1;
+        lastStroke=blackId=id2;
+
+    }
+
 	public GameSession(int id1, int id2,int fieldSize, int playerSize){
 		settings = new GameSettings(fieldSize,playerSize);
+        if (id1 == 0) {
+            id1 = id;
+        }
+        if (id2 == 0) {
+            id2 = id;
+        }
 		descInit(id1, id2);
 	}
 
@@ -80,7 +118,7 @@ public class GameSession{
 		currentPositions[y][x]=new Field(field);
 	}
 
-	private checker getAnotherColor(checker myColor){
+	checker getAnotherColor(checker myColor){
 		if(myColor==checker.black)
 			return checker.white;
 		else if(myColor==checker.white)
@@ -167,18 +205,18 @@ public class GameSession{
 		return ans;
 	}
 	
-	private Field getField(int x, int y){
+	Field getField(int x, int y){
 		return currentPositions[y][x];
 	}
 	
-	private checker getPlayerColor(int id){
+	checker getPlayerColor(int id){
 		if(id == whiteId)
 			return checker.white;
 		else 
 			return checker.black;
 	}
 	
-	private boolean checking(int id,int from_x, int from_y, int to_x, int to_y){
+	boolean checking(int id,int from_x, int from_y, int to_x, int to_y){
 		if(id==lastStroke){
 			System.err.println("false1");
 			return false;
@@ -203,11 +241,15 @@ public class GameSession{
 		return canEat(to_x,to_y);	
 	}
 	
-	private boolean makeUsualStroke(int from_x, int from_y, int to_x, int to_y){
+	boolean makeUsualStroke(int from_x, int from_y, int to_x, int to_y){
 		checker myColor = getFieldType(from_x, from_y);
 		if(canEat(myColor)){
 			return false;
 		}
+        if(!fieldIsKing(from_x, from_y)) {
+            if (to_y - from_y != (myColor == checker.white ? 1 : -1 ) )
+                return false;
+        }
 		move(from_x, from_y, to_x, to_y);
 		if(becameKing(to_x, to_y)){
 			makeKing(to_x, to_y);
@@ -232,7 +274,7 @@ public class GameSession{
 		return currentPositions[y][x].getType();
 	}
 
-	private boolean canEat(int x, int y){
+	boolean canEat(int x, int y){
 		if(fieldIsKing(x,y))
 			return kingCanEat(x,y);
 		else
@@ -320,7 +362,7 @@ public class GameSession{
 		return kingCanEatRightUp(x, y)||kingCanEatRightDown(x,y)||kingCanEatLeftUp(x,y)||kingCanEatLeftDown(x,y);
 	}
 
-	private boolean canEat(checker myColor){
+	boolean canEat(checker myColor){
 		for(int x=0;x<settings.getFieldSize();x++)
 			for(int y=0;y<settings.getFieldSize();y++){
 				if((getFieldType(x, y)==myColor)&&(canEat(x,y)))
@@ -355,8 +397,8 @@ public class GameSession{
 	private int abs(int number){
 		return Math.abs(number);
 	}
-	
-	private int normal(int number){
+
+    int normal(int number){
 		if(number==0)
 			return 0;
 		else
@@ -513,15 +555,14 @@ public class GameSession{
 		VFS.writeToFile(fileName, data);
 	}
 	
-	public void saveLog(int winnerId){
-		if(winnerId==blackId)
-			saveAILog("black");
-		else
-			saveAILog("white");
+	public String saveLog(int winnerId){
+        String forLog = winnerId==blackId ? "black" : "white";
+	    saveAILog(forLog);
 		String fileName="/log/"+dirForLog+"/"+String.valueOf(id)+".txt";
 		String data=log.toString()+"\n"+getSnapshot(whiteId).toStringTest();
 		VFS.writeToFile(fileName, data);
 		System.out.println("\nSave log for "+String.valueOf(id));
+        return forLog;
 	}
 
 	public char getNext(){
@@ -531,7 +572,7 @@ public class GameSession{
 			return 'w';
 	}
 
-	public int[] getFields(){
+    public int[] getFields(){
 		int[] fields = new int[blackQuantity+whiteQuantity];
 		int number=0;
 		for(int y=0;y<settings.getFieldSize();y++){
@@ -559,12 +600,22 @@ public class GameSession{
 		return fields;
 	}
 
-	public int getWhiteQuantity(){
-		return whiteQuantity;
-	}
-	
-	public int getBlackQuantity(){
-		return blackQuantity;
-	}
+    int getId() { return id; }
+
+    int getWhiteId() { return whiteId; }
+
+    int getBlackId() { return blackId; }
+
+    int getLastStroke() { return lastStroke; }
+
+    int getBlackQuantity() { return blackQuantity; };
+
+    int getWhiteQuantity() { return whiteQuantity; };
+
+    Field[][] getCurrentPositions() {return currentPositions;}
+
+
+
+
 }
 //Черная клетка, если координаты один. четности
