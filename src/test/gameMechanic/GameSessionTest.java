@@ -405,19 +405,19 @@ public class GameSessionTest {
     }
 
 //    Тест проваливается
-//    @Test
-//    public void KingTeleportTest() {
-//        Field[][] field = getEmptyField(8);
-//        field[4][6].setType(black);
-//        field[1][3].setType(white);
-//        field[1][3].makeKing();
-//        gameSession = new GameSession(1,2,field);
-//        System.out.print("\n\n");
-//        Assert.assertFalse(
-//                "Почему-то телепортировалась дамка",
-//                gameSession.checkStroke(1,3,6,7,0)
-//        );
-//    }
+    @Test
+    public void KingTeleportTest() {
+        Field[][] field = getEmptyField(8);
+        field[4][6].setType(black);
+        field[1][3].setType(white);
+        field[1][3].makeKing();
+        gameSession = new GameSession(1,2,field);
+        System.out.print("\n\n");
+        Assert.assertFalse(
+                "Почему-то телепортировалась дамка",
+                gameSession.checkStroke(1,3,6,7,0)
+        );
+    }
 
     @Test
     public void TeleportTest() {
