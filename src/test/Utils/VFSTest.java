@@ -17,7 +17,7 @@ import java.io.FileWriter;
  */
 public class VFSTest {
     String projPath =  System.getProperty("user.dir");
-    String absolutePath =  "/home/yulia/IdeaProjects/QA-server/statistic/time";
+    String absolutePath =  System.getProperty("user.home") + "/IdeaProjects/QA-server/statistic/time";
     String relativePath =  "statistic/time";
     String emptyFilePath = "/statistic/empty";
 
