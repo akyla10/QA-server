@@ -45,7 +45,7 @@ public class FrontendImpl extends AbstractHandler implements Frontend{
 
 	private void getStatistic(HttpServletResponse response, UserDataSet userSession){
 		Map<String,String> data= new HashMap<String,String>();
-		String mu=SysInfo.getStat("MemoryUsage");
+        String mu=SysInfo.getStat("MemoryUsage");
 		String tm = SysInfo.getStat("TotalMemory");
 		String time=SysInfo.getStat("Time");
 		String ccu = SysInfo.getStat("CCU");
@@ -86,12 +86,12 @@ public class FrontendImpl extends AbstractHandler implements Frontend{
 	}
 
 	private boolean inWeb(String target){
-		return ((target.equals("/"))||(target.equals("/wait"))||(target.equals("/game"))||(target.equals("/profile"))
+        return ((target.equals("/"))||(target.equals("/wait"))||(target.equals("/game"))||(target.equals("/profile"))
 				||(target.equals("/admin"))||(target.equals("/rules"))||(target.equals("/logout"))||(target.equals("/reg")));
 	}
 
 	private boolean isStatic(String target){
-		if(target.length()<4)
+        if(target.length()<4)
 			return false;
 		else if(target.length()==4)
 			return target.substring(0, 4).equals("/js/");
@@ -237,7 +237,7 @@ public class FrontendImpl extends AbstractHandler implements Frontend{
 		}
 		if(!inWeb(target)){
 			if(!isStatic(target)){
-				sendPage("404.html",userSession,response);
+                sendPage("404.html",userSession,response);
 			}
 			return;	
 		}

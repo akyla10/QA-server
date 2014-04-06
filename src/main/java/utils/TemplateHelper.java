@@ -13,6 +13,8 @@ import freemarker.template.Template;
 
 public class TemplateHelper {
 	private static Configuration cfg = new Configuration();
+    public static String currentPage;
+
 	public static void init() {
 		try {
 			cfg.setDirectoryForTemplateLoading(new File(System.getProperty("user.dir") + "/static/html"));				
@@ -31,9 +33,10 @@ public class TemplateHelper {
 			template = cfg.getTemplate(name);
 			template.process(map, out);
 		} catch (Exception e) {
-			e.printStackTrace();
+            //e.printStackTrace();
 		}
-	}
+        currentPage = map.get("page");
+    }
 
 	public static void renderTemplate(String name, Writer out) {
 		Template template;
