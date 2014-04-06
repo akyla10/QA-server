@@ -1,5 +1,8 @@
 package Utils;
 
+import com.sun.java.util.jar.pack.*;
+import gameClasses.Stroke;
+import gameMechanic.GameSession;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,5 +63,33 @@ public class ReflectionHelperTest {
         obj = ReflectionHelper.createInstance(existingClass);
         ReflectionHelper.setFieldValue(obj, "weirdnesshere", strValue);
         //Assert.assertNotNull(obj);
+    }
+
+    @Test
+    public void ForSetFieldValueStringTest() {
+        ForSetFieldValue forSetFieldValue = new ForSetFieldValue();
+        ReflectionHelper.setFieldValue(forSetFieldValue, "string", "13");
+        Assert.assertEquals(
+                "13",
+                forSetFieldValue.getString()
+        );
+    }
+
+    @Test
+    public void ForSetFieldValueDoubleTest() {
+        ForSetFieldValue forSetFieldValue = new ForSetFieldValue();
+        ReflectionHelper.setFieldValue(forSetFieldValue, "aDouble", "16");
+        forSetFieldValue.aDouble = -273.15;
+        Assert.assertEquals(
+                -273.15,
+                forSetFieldValue.aDouble
+        );
+    }
+
+    private class ForSetFieldValue {
+        String string = "string";
+        Integer integer = -1;
+        public Double aDouble;
+        public String getString() { return string;}
     }
 }
