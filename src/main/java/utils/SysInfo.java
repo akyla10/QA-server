@@ -19,7 +19,7 @@ public class SysInfo implements Runnable{
 	}
 
 	public static String getStat(String service){
-		return ("["+VFS.readFile(data.get(service))+"]");
+        return ("["+VFS.readFile(data.get(service))+"]");
 	}
 
 	public void run(){
