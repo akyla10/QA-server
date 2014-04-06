@@ -33,6 +33,7 @@ public class VFS{
 
     public static String normalizePath(String path) {
         String res = path;
+        if ( path.length() == 0 ) return "/";
         if(path.charAt(0) != '/') res = '/' + path;
         if(path.length()>1) {
             for(int i=0; i < path.length() - 1; i++) {

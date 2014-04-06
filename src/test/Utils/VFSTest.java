@@ -47,10 +47,28 @@ public class VFSTest {
         Assert.assertEquals(VFS.readFile(emptyFilePath), "test");
     }
 
+    @Test
+    public void normalizePathEmptyTest() {
+        Assert.assertEquals(
+                "/",
+                VFS.normalizePath("")
+        );
+    }
+
+    @Test
+    public void normalizePathOneSymbolTest() {
+        Assert.assertEquals(
+                "/o",
+                VFS.normalizePath("o")
+        );
+    }
+
     @After
     public void tearDown() throws Exception {
         File f = new File(VFS.getAbsolutePath(emptyFilePath));
         FileWriter fw = new FileWriter(f);
         fw.write(new String());
     }
+
+
 }
