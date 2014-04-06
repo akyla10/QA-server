@@ -8,6 +8,7 @@ import base.GameMechanic;
 import base.MessageSystem;
 
 import dbService.UserDataSet;
+import gameClasses.Field;
 import gameClasses.Snapshot;
 import gameClasses.Stroke;
 import gameMechanic.Stroke.*;
@@ -84,6 +85,21 @@ public class GameMechanicImpl implements GameMechanic{
 		createChat(sessionIdWhite, sessionIdBlack);
 	}
 
+    public void createGame(String sessionIdWhite, String sessionIdBlack,
+                           Map<String, String> sessionIdToColor, Map<String, UserDataSet> users,
+                           Field[][] fields){
+        int userIdWhite=users.get(sessionIdWhite).getId();
+        int userIdBlack=users.get(sessionIdBlack).getId();
+        GameSession gameSession=new GameSession(userIdWhite, userIdBlack,fields);
+        sessionIdToColor.put(sessionIdBlack,"black");
+        sessionIdToColor.put(sessionIdWhite,"white");
+        userIdToSession.put(userIdWhite, gameSession);
+        userIdToSession.put(userIdBlack, gameSession);
+        users.remove(sessionIdBlack);
+        users.remove(sessionIdWhite);
+        createChat(sessionIdWhite, sessionIdBlack);
+    }
+
 	private void createChat(String sessionIdWhite, String sessionIdBlack){
 		Address to = messageSystem.getAddressByName("GameChat");
 		MsgCreateChat msg = new MsgCreateChat(address,to,sessionIdWhite, sessionIdBlack);
@@ -111,7 +127,6 @@ public class GameMechanicImpl implements GameMechanic{
 		String[] keys = Caster.castKeysToStrings(users);
 		for(int count=0;count<users.size()/2;count++){
 			if(randomMod2()==1){
-//                TODO: спросить у Влада, что с этим делать.
 				sessionIdBlack = keys[count*2];
 				sessionIdWhite = keys[count*2+1];
 			}
