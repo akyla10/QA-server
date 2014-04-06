@@ -176,6 +176,8 @@ public class GameSessionTest {
         Assert.assertFalse("Сработал переход, куда нельзя",gameSession.checkStroke(1, 0, 5, 2, 3));
 
         Assert.assertFalse("Сработал переход на неигровую клетку",gameSession.checkStroke( 1, 0, 5, 0, 4));
+        Assert.assertFalse("Сработал переход на неигровую клетку",gameSession.checkStroke( 1, 0, 5, 1, 5));
+        Assert.assertFalse("Сработал переход c неигровой клетки",gameSession.checkStroke( 1, 1, 5, 0, 5));
         Assert.assertFalse("Сработал переход на ту же позицию", gameSession.checkStroke(1, 0, 5, 0, 5));
         Assert.assertTrue(gameSession.checkStroke(1, 0, 5, 1, 4));
         Assert.assertTrue(gameSession.checkStroke(2, 0, 5, 1, 4));
@@ -189,9 +191,9 @@ public class GameSessionTest {
                 for( int j = currentPositions[i].length -1 ; j >=0; j--) {
                     Field field = currentPositions[i][j];
                     if (field.getType() == white) {
-                        result += "w";
+                        result += field.isKing() ? "W" : "w";
                     } else if (field.getType() == black) {
-                        result += "b";
+                        result += field.isKing() ? "B" : "b";
                     } else if (field.getType() == Field.checker.nothing) {
                         result += "o";
                     }
@@ -203,9 +205,9 @@ public class GameSessionTest {
                 for( int j = 0; j < currentPositions[i].length; j++) {
                     Field field = currentPositions[i][j];
                     if (field.getType() == white) {
-                        result += "w";
+                        result += field.isKing() ? "W" : "w";
                     } else if (field.getType() == black) {
-                        result += "b";
+                        result += field.isKing() ? "B" : "b";
                     } else if (field.getType() == Field.checker.nothing) {
                         result += "o";
                     }
@@ -633,11 +635,294 @@ public class GameSessionTest {
         field[5][5].setType(white);
         field[5][5].makeKing();
         gameSession = new GameSession(1,2,field);
-        Assert.assertFalse( gameSession.checkStroke(1,5,2,8,-1) );
-        Assert.assertFalse( gameSession.checkStroke(1,5,2,2,-1) );
+        Assert.assertFalse(gameSession.checkStroke(1, 5, 2, 8, -1));
+        Assert.assertFalse(gameSession.checkStroke(1, 5, 2, 2, -1));
         Assert.assertFalse( gameSession.checkStroke(1,5,2,9, 6) );
-        Assert.assertFalse( gameSession.checkStroke(1,5,2, -10 , 17 ) );
-        print(white);
-
+        Assert.assertFalse(gameSession.checkStroke(1, 5, 2, -10, 17));
     }
+
+    @Test
+    public void AssertNotBlockWhenCanEatBackLeftTest() {
+        Field[][] field = getEmptyField(8);
+        field[4][6].setType(black);
+        field[6][6].setType(black);
+        field[7][5].setType(black);
+        field[5][7].setType(white);
+        gameSession = new GameSession(1,2, field);
+        Assert.assertEquals(
+                0,
+                gameSession.getWinnerId()
+        );
+    }
+
+    @Test
+    public void AssertNotBlockWhenCanEatBackLeftKingTest() {
+        Field[][] field = getEmptyField(8);
+        field[4][6].setType(black);
+        field[6][6].setType(black);
+        field[7][5].setType(black);
+        field[5][7].setType(white);
+        field[5][7].makeKing();
+        gameSession = new GameSession(1,2, field);
+        Assert.assertEquals(
+                0,
+                gameSession.getWinnerId()
+        );
+    }
+
+    @Test
+    public void AssertNotBlockWhenCanEatBackRightTest() {
+        /*
+        oooooooo
+        oobooooo
+        oboooooo
+        wooooooo
+        oboooooo
+        oooooooo
+        oooooooo
+        oooooooo
+        */
+        Field[][] field = getEmptyField(8);
+        field[3][1].setType(black);
+        field[5][1].setType(black);
+        field[6][2].setType(black);
+        field[4][0].setType(white);
+        gameSession = new GameSession(1,2, field);
+        Assert.assertEquals(
+                0,
+                gameSession.getWinnerId()
+        );
+    }
+
+    @Test
+    public void AssertNotBlockWhenCanEatBackRightKingTest() {
+        /*
+        oooooooo
+        oobooooo
+        oboooooo
+        Wooooooo
+        oboooooo
+        oooooooo
+        oooooooo
+        oooooooo
+        */
+        Field[][] field = getEmptyField(8);
+        field[3][1].setType(black);
+        field[5][1].setType(black);
+        field[6][2].setType(black);
+        field[4][0].setType(white);
+        field[4][0].makeKing();
+        gameSession = new GameSession(1,2, field);
+        Assert.assertEquals(
+                0,
+                gameSession.getWinnerId()
+        );
+    }
+
+    @Test
+    public void AssertNotBlockWhenCanEatBackLeftWhiteTest() {
+        Field[][] field = getEmptyField(8);
+        field[4][0].setType(black);
+        field[4][2].setType(white);
+        field[3][1].setType(white);
+        field[2][2].setType(white);
+        gameSession = new GameSession(1,2, field);
+        gameSession.checkStroke(1, 2, 3, 1, 2);
+        /*
+        Вид со стороны черных print(black);
+            oooooooo
+            oooooooo
+            ooooowoo
+            oooooowo
+            ooooooob
+            oooooowo
+            oooooooo
+            oooooooo
+        * */
+
+        Assert.assertEquals(
+                0,
+                gameSession.getWinnerId()
+        );
+    }
+
+    @Test
+    public void AssertBlockWhenCanNotEatBackLeftBlackTest() {
+        Field[][] field = getEmptyField(8);
+        field[4][0].setType(black);
+        field[4][2].setType(white);
+        field[3][1].setType(white);
+        field[2][2].setType(white);
+        field[6][2].setType(white);
+        gameSession = new GameSession(1,2, field);
+        gameSession.checkStroke(1,2,3,1,2);
+        /*
+        Вид со стороны черных print(black);
+            oooooooo
+            oooooooo
+            ooooowoo
+            oooooowo
+            ooooooob
+            oooooowo
+            ooooowoo
+            oooooooo
+        * */
+
+        Assert.assertEquals(
+                1,
+                gameSession.getWinnerId()
+        );
+    }
+
+    @Test
+    public void AssertBlockWhenCanNotEatBackRightBlackTest() {
+        Field[][] field = getEmptyField(8);
+        field[3][7].setType(black);
+        field[3][7].makeKing();
+        field[4][4].setType(white);
+        field[2][6].setType(white);
+        field[1][5].setType(white);
+        field[4][6].setType(white);
+        gameSession = new GameSession(1,2, field);
+        gameSession.checkStroke(1,4,3,5,2);
+        /*
+        Вид со стороны черных print(black);
+            oooooooo
+            oowooooo
+            owoooooo
+            Booooooo
+            owoooooo
+            oowooooo
+            oooooooo
+            oooooooo
+        * */
+
+        Assert.assertEquals(
+                1,
+                gameSession.getWinnerId()
+        );
+    }
+
+    @Test
+    public void AssertBlackKingNotBlockTopTest() {
+        Field[][] field = getEmptyField(8);
+        field[3][7].setType(black);
+        field[3][7].makeKing();
+        field[4][4].setType(white);
+        field[2][6].setType(white);
+        field[1][5].setType(white);
+        field[4][6].setType(white);
+        gameSession = new GameSession(1,2, field);
+        gameSession.checkStroke(1,4,3,3,2);
+        /*
+        Вид со стороны черных print(black);
+            oooooooo
+            oowooooo
+            owoooooo
+            Booooooo
+            owoooooo
+            oooowooo
+            oooooooo
+            oooooooo
+        * */
+
+        Assert.assertEquals(
+                0,
+                gameSession.getWinnerId()
+        );
+    }
+
+//    @Test
+//    Тест проваливается
+    public void AssertBlackNotBlockTopTest() {
+        Field[][] field = getEmptyField(8);
+        field[3][7].setType(black);
+        field[3][7].makeKing();
+        field[4][4].setType(white);
+        field[2][6].setType(white);
+        field[1][5].setType(white);
+        gameSession = new GameSession(1,2, field);
+        gameSession.checkStroke(1, 4, 3, 3, 2);
+        /*
+        Вид со стороны черных print(black);
+            oooooooo
+            oowooooo
+            owoooooo
+            Booooooo
+            oooooooo
+            oooowooo
+            oooooooo
+            oooooooo
+        * */
+
+        Assert.assertEquals(
+                0,
+                gameSession.getWinnerId()
+        );
+    }
+
+    @Test
+    public void AssertNotBlockWhenCanEatBackLeftKingWhiteTest() {
+        Field[][] field = getEmptyField(8);
+        field[4][0].setType(black);
+        field[4][0].makeKing();
+        field[4][2].setType(white);
+        field[3][1].setType(white);
+        field[2][2].setType(white);
+        gameSession = new GameSession(1,2, field);
+        gameSession.checkStroke(1,2,3,1,2);
+        /*
+        Вид со стороны черных print(black);
+            oooooooo
+            oooooooo
+            ooooowoo
+            oooooowo
+            oooooooB
+            oooooowo
+            oooooooo
+            oooooooo
+        * */
+
+        Assert.assertEquals(
+                0,
+                gameSession.getWinnerId()
+        );
+    }
+
+    @Test
+    public void KingCantMoveWhenCanEatLeftTest() {
+        Field[][] field = getEmptyField(8);
+        field[3][3].setType(white);
+        field[3][3].makeKing();
+        field[5][5].setType(black);
+        gameSession = new GameSession(1,2,field);
+        Assert.assertFalse(
+            gameSession.checkStroke(1,3,4,2,3)
+        );
+    }
+
+    @Test
+//    Тест проваливается
+    public void KingCantMoveWhenCanEatRightTest() {
+        Field[][] field = getEmptyField(8);
+        field[4][4].setType(white);
+        field[4][4].makeKing();
+        field[6][2].setType(black);
+        gameSession = new GameSession(1,2,field);
+        print(white);
+        /*
+            oooooooo
+            oobooooo
+            oooooooo
+            ooooWooo
+            oooooooo
+            oooooooo
+            oooooooo
+            oooooooo
+        * */
+        Assert.assertFalse(
+            gameSession.checkStroke(1,4,3,5,2)
+        );
+    }
+
 }
