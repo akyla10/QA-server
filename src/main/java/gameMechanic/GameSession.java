@@ -141,6 +141,10 @@ public class GameSession{
 		if(!checking(id,from_x, from_y, to_x, to_y))
 			return false;
 		if (eating(from_x, from_y, to_x, to_y)){
+			if(!checkEating(from_x, from_y, to_x, to_y)){
+				System.err.println("false4");
+				return false;
+			}
 			changeId=!makeEatingStroke(from_x, from_y, to_x, to_y);
 		}
 		else{
@@ -156,6 +160,12 @@ public class GameSession{
 		return true;
 	}
 
+	private boolean checkEating(int from_x, int from_y, int to_x, int to_y){
+		if(!fieldIsKing(from_x, from_y))
+			return true;
+		else
+			return !checkKingOtherEating(from_x, from_y, to_x, to_y);
+	}
 	
 	private boolean checkKingOtherEating(int from_x, int from_y, int to_x, int to_y){
 		checker anotherColor = getAnotherColor(getFieldType(from_x, from_y));
