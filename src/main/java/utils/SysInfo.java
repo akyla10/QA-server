@@ -16,6 +16,7 @@ public class SysInfo implements Runnable{
 		data.put("TotalMemory", "/statistic/totalMemory");
 		data.put("Time", "/statistic/time");
 		data.put("CCU", "/statistic/ccu");
+		data.put("Key", "/statistic/value");
 	}
 
 	public static String getStat(String service){
