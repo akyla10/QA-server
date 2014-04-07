@@ -106,16 +106,14 @@ public class VFS{
 			System.err.println(e.getMessage());
 		}
 		finally{
-			if(err!=null){
-				try{
-					err.close();
-				}
-				catch(Exception e){
-					System.err.println("\nError");
-					System.err.println("VFS, writeToEndOfFile2");
-					System.err.println(e.getMessage());
-				}
-			}
+            try{
+                err.close();
+            }
+            catch(Exception e){
+                System.err.println("\nError");
+                System.err.println("VFS, writeToEndOfFile2");
+                System.err.println(e.getMessage());
+            }
 		}
 	}
 
@@ -138,26 +136,22 @@ public class VFS{
 			System.err.println(e.getMessage());
 		}
 		finally{
-			if(br!=null){
-				try{
-					br.close();
-				}
-				catch(Exception e){
-					System.err.println("\nError");
-					System.err.println("VFS, readFile2");
-					System.err.println(e.getMessage());
-				}
-			}
-			if(fr!=null){
-				try{
-					fr.close();
-				}
-				catch(Exception e){
-					System.err.println("\nError");
-					System.err.println("VFS, readFile3");
-					System.err.println(e.getMessage());
-				}
-			}
+            try{
+                br.close();
+            }
+            catch(Exception e){
+                System.err.println("\nError");
+                System.err.println("VFS, readFile2");
+                System.err.println(e.getMessage());
+            }
+            try{
+                fr.close();
+            }
+            catch(Exception e){
+                System.err.println("\nError");
+                System.err.println("VFS, readFile3");
+                System.err.println(e.getMessage());
+            }
 		}
 		return string.toString();
 	}

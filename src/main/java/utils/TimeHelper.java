@@ -38,14 +38,14 @@ public class TimeHelper{
 		StringBuilder string = new StringBuilder();
 		string.append("'");
 		string.append(String.valueOf(hours));
+	    string.append(":");
+        string.append(
+                String.format("%02d", minutes)
+        );
 		string.append(":");
-		if(minutes<10)
-			string.append("0");
-		string.append(String.valueOf(minutes));
-		string.append(":");
-		if(seconds<10)
-			string.append("0");
-		string.append(String.valueOf(seconds));
+        string.append(
+                String.format("%02d", seconds)
+        );
 		string.append("'");
 		return string.toString();
 	}
