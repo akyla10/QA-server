@@ -156,7 +156,36 @@ public class GameMechanicImplTest {
                 resp.size()
         );
     }
-пше
+
+    @Test
+    public void o() {
+        Field[][] field = new Field[8][8];
+        for(int i = 0; i < field.length; i++)
+            for(int j = 0; j < field[i].length; j++)
+                field[i][j] = new Field(Field.checker.nothing);
+        field[6][6].setType(Field.checker.white);
+
+        gameSession = new GameSession(1,2,field);
+        GameMechanicImpl gameMechanic =new GameMechanicImpl(ms);
+        Map<String, String> sessionIdToColor = new HashMap<String, String>();
+        Map<String, UserDataSet> users = new HashMap<String, UserDataSet>();
+        users.put("1", new UserDataSet(1,"op", 2,3,3 ) );
+        users.put("2", new UserDataSet(2,"hop", 3,4,5 ) );
+        gameMechanic.createGame("1", "2", sessionIdToColor, users, field);
+        Map<Integer,Stroke> resp= gameMechanic.checkStroke(1,new Stroke(7,0,6,1, ""));
+        Assert.assertEquals(
+                2,
+                resp.size()
+        );
+        Assert.assertEquals(
+                "win",
+                resp.get(1).getStatus()
+        );
+        Assert.assertEquals(
+                "lose",
+                resp.get(2).getStatus()
+        );
+    }
 
     private String print(Field.checker color, Field[][] currentPositions){
         String result = "";
