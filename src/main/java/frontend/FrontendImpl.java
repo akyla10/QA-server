@@ -63,7 +63,7 @@ public class FrontendImpl extends AbstractHandler implements Frontend{
 		}
 	}
 
-	private status getStatus(HttpServletRequest request,String target,status stat,String sessionId){
+	status getStatus(HttpServletRequest request,String target,status stat,String sessionId){
 		if((stat.equals(status.haveCookie))&&(request.getMethod().equals("POST")))
 			stat=status.haveCookieAndPost;
 		if((stat.equals(status.haveCookie))&&(UserDataImpl.getUserSessionBySessionId(sessionId).getId()!=0))
@@ -99,7 +99,7 @@ public class FrontendImpl extends AbstractHandler implements Frontend{
 	}
 
 	private boolean newUser(String strSessionId, String strStartServerTime){
-		return((strSessionId==null)||(strStartServerTime==null)
+        return((strSessionId==null)||(strStartServerTime==null)
 				||(!UserDataImpl.checkServerTime(strStartServerTime))
 				||(!UserDataImpl.containsSessionId(strSessionId)));
 	}
@@ -253,7 +253,8 @@ public class FrontendImpl extends AbstractHandler implements Frontend{
 				return;
 			}
 		}
-		switch(stat){
+
+        switch(stat){
 		case nothing:
 			onNothingStatus(target, sessionId, userSession,strStartServerTime, response);
 			break;

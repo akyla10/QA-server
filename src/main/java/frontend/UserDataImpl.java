@@ -66,7 +66,7 @@ public class UserDataImpl implements UserData{
 	}
 
 	public static boolean containsSessionId(String sessionId){
-		return sessionIdToUserSession.containsKey(sessionId);
+        return sessionIdToUserSession.containsKey(sessionId);
 	}
 
 	public static int ccu(){
@@ -74,7 +74,7 @@ public class UserDataImpl implements UserData{
 	}
 
 	public static void putSessionIdAndUserSession(String sessionId, UserDataSet userSession){
-		sessionIdToUserSession.put(sessionId, userSession);
+        sessionIdToUserSession.put(sessionId, userSession);
 	}
 
 	public static UserDataSet getLogInUserBySessionId(String sessionId){
