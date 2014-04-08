@@ -140,16 +140,20 @@ public class FrontendImpl extends AbstractHandler implements Frontend{
 		}
 	}
 
-	private void onHaveCookieStatus(String target, UserDataSet userSession, HttpServletResponse response){
+	String onHaveCookieStatus(String target, UserDataSet userSession, HttpServletResponse response){
 		if (target.equals("/")){
 			sendPage("index.html",userSession,response);
+            return "index.html";
+
 		}
 		else if (target.equals("/reg")){
 			sendPage("reg.html",userSession,response);
+            return "reg.html";
 		}
 		else{
 			response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
 			response.addHeader("Location", "/");
+            return null;
 		}
 	}
 

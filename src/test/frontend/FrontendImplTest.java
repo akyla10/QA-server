@@ -28,7 +28,7 @@ import static utils.TemplateHelper.renderTemplate;
 /**
  * Created by anton on 4/5/14.
  */
-public class FrontendImplTest extends TestCase {
+public class FrontendImplTest  {
 
     MessageSystem messageSystem;
     FrontendImpl frontend;
@@ -74,6 +74,33 @@ public class FrontendImplTest extends TestCase {
             return c;
         } else
             return new Cookie[0];
+    }
+
+
+    @Test
+    public void controllerIndexTest() {
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        Assert.assertEquals(
+                "index.html",
+                frontend.onHaveCookieStatus("/", new UserDataSet(), httpServletResponse)
+        );
+    }
+
+    @Test
+    public void controllerRegTest() {
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        Assert.assertEquals(
+                "reg.html",
+                frontend.onHaveCookieStatus("/reg", new UserDataSet(), httpServletResponse)
+        );
+    }
+
+    @Test
+    public void controllerTest() {
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        Assert.assertNull(
+                frontend.onHaveCookieStatus("opopop.html", new UserDataSet(), httpServletResponse)
+        );
     }
 
     @Test
@@ -144,6 +171,7 @@ public class FrontendImplTest extends TestCase {
         Assert.assertTrue(containsSessionId(newSession));
     }
 
+    @Test
     public void testGetStatus() throws Exception {
         String newSession = getSHA2(String.valueOf(session.incrementAndGet()));
         when(this.httpRequest.getMethod()).thenReturn("POST");
