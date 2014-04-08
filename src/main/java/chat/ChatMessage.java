@@ -13,9 +13,9 @@ public class ChatMessage {
 //		return sender;
 //	}
 //
-//	public String getMessage(){
-//		return text;
-//	}
+	public String getMessage(){
+		return text;
+	}
 	
 	public String json(){
 		return ("{\"sender\":\""+sender+"\",\"text\":\""+text+"\"}");

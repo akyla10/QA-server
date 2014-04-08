@@ -19,7 +19,7 @@ public class MessageSystemImpl implements MessageSystem{
 
 	public void addService (Abonent abonent,String name){
 		messages.put(abonent.getAddress(),new ConcurrentLinkedQueue<Msg>());
-		addressService.addService(abonent, name);
+        addressService.addService(abonent, name);
 	}
 
 	public Address getAddressByName(String name){
@@ -35,7 +35,7 @@ public class MessageSystemImpl implements MessageSystem{
 	}
 
 	public void execForAbonent(Abonent abonent){
-		ConcurrentLinkedQueue<Msg> messageQueue=messages.get(abonent.getAddress());
+        ConcurrentLinkedQueue<Msg> messageQueue=messages.get(abonent.getAddress());
 		while(!messageQueue.isEmpty()){
 			Msg message=messageQueue.poll();
 			message.exec(abonent);

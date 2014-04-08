@@ -56,6 +56,10 @@ public class GameChatImpl implements GameChat{
 		}
 	}
 
+    public static String getMessageById(String sessionId) {
+        return sessionIdToChat.get("1").get(0).getMessage();
+    }
+
 	public void run(){
 		while(true){
 			messageSystem.execForAbonent(this);

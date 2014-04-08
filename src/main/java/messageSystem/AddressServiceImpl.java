@@ -30,10 +30,8 @@ public class AddressServiceImpl implements AddressService{
 	}
 
 	public Address getAddressByName(String name){
-		if (!nameToQuantity.containsKey(name)){
-			System.err.println("Service "+name+" not found");
-			System.err.println("Shutdown");
-			System.exit(-1);
+        //System.out.println(!nameToQuantity.containsKey(name));
+        if (!nameToQuantity.containsKey(name)){
 			return null;
 		}
 		String number = String.valueOf(nameToLast.get(name));

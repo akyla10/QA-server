@@ -1,12 +1,18 @@
 package chat;
 
-import junit.framework.Assert;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import base.GameChat;
+import base.MessageSystem;
+import dbService.UserDataSet;
+import frontend.UserDataImpl;
+import messageSystem.MessageSystemImpl;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+
+import static chat.GameChatImpl.*;
+import static frontend.UserDataImpl.putLogInUser;
+import static org.junit.Assert.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,35 +22,28 @@ import org.junit.Test;
  * To change this template use File | Settings | File Templates.
  */
 public class ChatMessageTest {
-    String s, t;
-    ChatMessage cm;
+    MessageSystem messageSystem;
+    GameChat gameChat;
 
     @Before
-    public void setUp() {
-        s =  "sender";
-        t =  "message content";
-        cm = new ChatMessage(s, t);
+    public void setUp() throws Exception {
+        messageSystem = new MessageSystemImpl();
+        gameChat = new GameChatImpl(messageSystem);
     }
 
     @Test
-    public void testChatMessage() throws Exception {
-        Assert.assertEquals(cm.sender, s);
-        Assert.assertEquals(cm.text, t);
+    public void testSend(){
+        gameChat.createChat("1", "2");
+        putLogInUser("1", new UserDataSet());
+        sendMessage("1", "someMsg");
+        assertNotNull(getMessageById("1"));
     }
 
     @Test
-    public void testJson() throws Exception {
-        String json = cm.json();
-        Assert.assertTrue((isValidJSON(json)));
-    }
-
-    public boolean isValidJSON(String input)
-    {
-        try {
-            new JSONParser().parse(input);
-            return true;
-        } catch (ParseException e) {
-            return false;
-        }
+    public void testSendNull(){
+        gameChat.createChat("1", "2");
+        putLogInUser("1", new UserDataSet());
+        sendMessage("1", null);
+        assertNull(getMessageById("1"));
     }
 }
