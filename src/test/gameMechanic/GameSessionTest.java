@@ -909,7 +909,6 @@ public class GameSessionTest {
         field[4][4].makeKing();
         field[6][2].setType(black);
         gameSession = new GameSession(1,2,field);
-        print(white);
         /*
             oooooooo
             oobooooo
@@ -922,6 +921,38 @@ public class GameSessionTest {
         * */
         Assert.assertFalse(
             gameSession.checkStroke(1,4,3,5,2)
+        );
+    }
+
+    @Test
+    public void canMoveRightUpTest() {
+        gameSession = new GameSession(1,2,8,3);
+        Assert.assertFalse(
+                gameSession.canMoveRightUp(3452,3456)
+        );
+    }
+
+    @Test
+    public void canMoveLeftUpTest() {
+        gameSession = new GameSession(1,2,8,3);
+        Assert.assertFalse(
+                gameSession.canMoveLeftUp(3452,3456)
+        );
+    }
+
+    @Test
+    public void canMoveLeftDownTest() {
+        gameSession = new GameSession(1,2,8,3);
+        Assert.assertFalse(
+                gameSession.canMoveLeftDown(-3452,-456)
+        );
+    }
+
+    @Test
+    public void canMoveRightDownTest() {
+        gameSession = new GameSession(1,2,8,3);
+        Assert.assertFalse(
+                gameSession.canMoveRightDown(-3452,-456)
         );
     }
 

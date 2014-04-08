@@ -453,28 +453,28 @@ public class GameSession{
 			return pawnEating(from_x, from_y, to_x, to_y);
 	}
 	
-	private boolean canMoveRightUp(int x, int y){
+	boolean canMoveRightUp(int x, int y){
 		if((y<settings.getFieldSize()-1)&&(x<settings.getFieldSize()-1)&&fieldIsEmpty(x+1, y+1))
 			return true;
 		else
 			return false;
 	}
 	
-	private boolean canMoveRightDown(int x, int y){
+	boolean canMoveRightDown(int x, int y){
 		if((y>0)&&(x<settings.getFieldSize()-1)&&fieldIsEmpty(x+1, y-1))
 			return true;
 		else
 			return false;
 	}
 	
-	private boolean canMoveLeftUp(int x, int y){
+	boolean canMoveLeftUp(int x, int y){
 		if((y<settings.getFieldSize()-1)&&(x>0)&&fieldIsEmpty(x-1, y+1))
 			return true;
 		else
 			return false;
 	}
 	
-	private boolean canMoveLeftDown(int x, int y){
+	boolean canMoveLeftDown(int x, int y){
 		if((y>0)&&(x>0)&&fieldIsEmpty(x-1, y-1))
 			return true;
 		else
