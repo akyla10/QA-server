@@ -246,8 +246,8 @@ public class FrontendImplTest  {
 
         when(httpServletRequest.getParameter("password")).thenReturn("p");
         when(httpServletRequest.getParameter("nick")).thenReturn("n");
-        when(request.getParameter("regNick")).thenReturn("n");
-        when(request.getParameter("regPassword")).thenReturn("n");
+        when(httpServletRequest.getParameter("regNick")).thenReturn("n");
+        when(httpServletRequest.getParameter("regPassword")).thenReturn("n");
 
         Assert.assertTrue(
             frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
@@ -263,8 +263,8 @@ public class FrontendImplTest  {
 
         when(httpServletRequest.getParameter("password")).thenReturn(null);
         when(httpServletRequest.getParameter("nick")).thenReturn("n");
-        when(request.getParameter("regNick")).thenReturn("n");
-        when(request.getParameter("regPassword")).thenReturn("n");
+        when(httpServletRequest.getParameter("regNick")).thenReturn("n");
+        when(httpServletRequest.getParameter("regPassword")).thenReturn("n");
 
         Assert.assertFalse(
             frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
@@ -280,8 +280,8 @@ public class FrontendImplTest  {
 
         when(httpServletRequest.getParameter("password")).thenReturn("p");
         when(httpServletRequest.getParameter("nick")).thenReturn(null);
-        when(request.getParameter("regNick")).thenReturn("n");
-        when(request.getParameter("regPassword")).thenReturn("n");
+        when(httpServletRequest.getParameter("regNick")).thenReturn("n");
+        when(httpServletRequest.getParameter("regPassword")).thenReturn("n");
 
         Assert.assertFalse(
             frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
@@ -297,8 +297,8 @@ public class FrontendImplTest  {
 
         when(httpServletRequest.getParameter("password")).thenReturn(null);
         when(httpServletRequest.getParameter("nick")).thenReturn(null);
-        when(request.getParameter("regNick")).thenReturn("n");
-        when(request.getParameter("regPassword")).thenReturn("n");
+        when(httpServletRequest.getParameter("regNick")).thenReturn("n");
+        when(httpServletRequest.getParameter("regPassword")).thenReturn("n");
 
         Assert.assertFalse(
             frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
@@ -314,8 +314,8 @@ public class FrontendImplTest  {
 
         when(httpServletRequest.getParameter("password")).thenReturn(null);
         when(httpServletRequest.getParameter("nick")).thenReturn(null);
-        when(request.getParameter("regNick")).thenReturn("n");
-        when(request.getParameter("regPassword")).thenReturn("n");
+        when(httpServletRequest.getParameter("regNick")).thenReturn("n");
+        when(httpServletRequest.getParameter("regPassword")).thenReturn("n");
 
         Assert.assertFalse(
             frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
@@ -331,8 +331,8 @@ public class FrontendImplTest  {
 
         when(httpServletRequest.getParameter("password")).thenReturn(null);
         when(httpServletRequest.getParameter("nick")).thenReturn(null);
-        when(request.getParameter("regNick")).thenReturn(null);
-        when(request.getParameter("regPassword")).thenReturn("n");
+        when(httpServletRequest.getParameter("regNick")).thenReturn(null);
+        when(httpServletRequest.getParameter("regPassword")).thenReturn("n");
 
         Assert.assertFalse(
             frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
@@ -348,8 +348,8 @@ public class FrontendImplTest  {
 
         when(httpServletRequest.getParameter("password")).thenReturn(null);
         when(httpServletRequest.getParameter("nick")).thenReturn(null);
-        when(request.getParameter("regNick")).thenReturn("");
-        when(request.getParameter("regPassword")).thenReturn(null);
+        when(httpServletRequest.getParameter("regNick")).thenReturn("");
+        when(httpServletRequest.getParameter("regPassword")).thenReturn(null);
 
         Assert.assertFalse(
             frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
@@ -365,8 +365,8 @@ public class FrontendImplTest  {
 
         when(httpServletRequest.getParameter("password")).thenReturn(null);
         when(httpServletRequest.getParameter("nick")).thenReturn(null);
-        when(request.getParameter("regNick")).thenReturn("");
-        when(request.getParameter("regPassword")).thenReturn(null);
+        when(httpServletRequest.getParameter("regNick")).thenReturn("");
+        when(httpServletRequest.getParameter("regPassword")).thenReturn(null);
 
         Assert.assertFalse(
             frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
@@ -382,8 +382,8 @@ public class FrontendImplTest  {
 
         when(httpServletRequest.getParameter("password")).thenReturn(null);
         when(httpServletRequest.getParameter("nick")).thenReturn(null);
-        when(request.getParameter("regNick")).thenReturn("4");
-        when(request.getParameter("regPassword")).thenReturn("44");
+        when(httpServletRequest.getParameter("regNick")).thenReturn("4");
+        when(httpServletRequest.getParameter("regPassword")).thenReturn("44");
 
         Assert.assertFalse(
             frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
@@ -399,8 +399,8 @@ public class FrontendImplTest  {
 
         when(httpServletRequest.getParameter("password")).thenReturn(null);
         when(httpServletRequest.getParameter("nick")).thenReturn(null);
-        when(request.getParameter("regNick")).thenReturn("4rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-        when(request.getParameter("regPassword")).thenReturn("44");
+        when(httpServletRequest.getParameter("regNick")).thenReturn("4rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+        when(httpServletRequest.getParameter("regPassword")).thenReturn("44");
 
         Assert.assertFalse(
             frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
