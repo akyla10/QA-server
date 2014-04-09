@@ -3,6 +3,7 @@ package frontend;
 import base.Abonent;
 import base.MessageSystem;
 import com.sun.corba.se.impl.corba.AnyImpl;
+import junit.framework.Assert;
 import junit.framework.TestCase;
 import netscape.javascript.JSObject;
 import org.json.simple.JSONObject;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by anton on 4/9/14.
  */
-public class WebSocketImplTest extends TestCase {
+public class WebSocketImplTest  {
 
     @Test
     public void test() throws ParseException {
@@ -217,12 +218,23 @@ public class WebSocketImplTest extends TestCase {
         WebSocketImpl spy = spy(webSocket);
         spy.setMS(messageSystem);
         when(spy.isNotConnected()).thenReturn(Boolean.TRUE);
+        spy.onWebSocketText("opop");
         verify(spy, never()).checkStroke(anyString(), anyInt(), anyInt(), anyInt(), anyInt(), anyString());
         verify(spy, never()).addNewWS(anyString());
      }
     
     @Test
-    public  void testConstructor() {
+    public void parseTest() {
+        WebSocketImpl webSocket = new WebSocketImpl(false);
+        JSONObject jsonObject = webSocket.parse("{\"id\":\"2\"}");
+        Assert.assertNotNull(jsonObject);
+    }
+
+    @Test
+    public void parseErrorTest() {
+        WebSocketImpl webSocket = new WebSocketImpl(false);
+        JSONObject jsonObject = webSocket.parse("{\"jfsdjhsd\"fk\"}");
+        Assert.assertNull(jsonObject);
     }
 
 }

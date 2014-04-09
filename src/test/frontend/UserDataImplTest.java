@@ -1,10 +1,22 @@
 package frontend;
 
 import base.MessageSystem;
+import com.sun.java.swing.plaf.motif.resources.motif;
+import com.sun.java.swing.plaf.motif.resources.motif_zh_CN;
+import dbService.UserDataSet;
 import junit.framework.Assert;
 import messageSystem.MessageSystemImpl;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 /**
  * Created with IntelliJ IDEA.
@@ -44,4 +56,15 @@ public class UserDataImplTest {
         catch (InterruptedException e) {}
 
     }
+
+//    @Test
+//    public void checkUsersTest() throws NoSuchFieldException, IllegalAccessException {
+//        MessageSystem ms = mock(MessageSystem.class);
+//        UserDataImpl userData1 = new UserDataImpl(ms);
+//        UserDataImpl spy = spy(userData1);
+//        Map<String, UserDataSet> sessionIdToUserSession = new ConcurrentHashMap<String,UserDataSet>();
+//        Field field = spy.getClass().getField("sessionIdToUserSession");
+//        field.set(spy, sessionIdToUserSession);
+//
+//    }
 }

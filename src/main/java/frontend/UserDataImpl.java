@@ -179,7 +179,7 @@ public class UserDataImpl implements UserData{
 		messageSystem.putMsg(to, msg);
 	}
 
-	private void keepAlive(String sessionId){
+	void keepAlive(String sessionId){
 		try{
 			if(sessionIdToWS.get(sessionId)!=null){
 				getWSBySessionId(sessionId).sendString("1");
