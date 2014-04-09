@@ -8,6 +8,9 @@ import org.junit.Test;
 
 import static gameClasses.Field.checker.black;
 import static gameClasses.Field.checker.white;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by anton on 4/4/14.
@@ -952,7 +955,33 @@ public class GameSessionTest {
     public void canMoveRightDownTest() {
         gameSession = new GameSession(1,2,8,3);
         Assert.assertFalse(
-                gameSession.canMoveRightDown(-3452,-456)
+                gameSession.canMoveRightDown(-3452, -456)
+        );
+    }
+
+//    Теперь тесты с использованием моков и прочей ерунды
+
+    @Test
+    public void checkStroke() {
+        gameSession = new GameSession(1,2);
+        GameSession spy = spy(gameSession);
+        when(spy.checkEating(1,6,2,5)).thenReturn(Boolean.FALSE);
+        when(spy.eating(1,6,2,5)).thenReturn(Boolean.TRUE);
+        when(spy.checking(1,1,6,2,5)).thenReturn(Boolean.TRUE);
+        Assert.assertFalse(
+                spy.checkStroke(1,1,1,2,2)
+        );
+    }
+
+    @Test
+    public void checkEatingTest() {
+        gameSession = new GameSession(1,2);
+        GameSession spy = spy(gameSession);
+        when(spy.checkKingOtherEating( 1, 1, 2, 2)).thenReturn(Boolean.FALSE);
+        when(spy.fieldIsKing(1, 1)).thenReturn(Boolean.TRUE);
+        Boolean aBoolean = spy.checkEating( 1, 1, 2, 2);
+        Assert.assertTrue(
+                spy.checkEating( 1, 1, 2, 2)
         );
     }
 

@@ -160,14 +160,14 @@ public class GameSession{
 		return true;
 	}
 
-	private boolean checkEating(int from_x, int from_y, int to_x, int to_y){
+	boolean checkEating(int from_x, int from_y, int to_x, int to_y){
 		if(!fieldIsKing(from_x, from_y))
 			return true;
 		else
 			return !checkKingOtherEating(from_x, from_y, to_x, to_y);
 	}
 	
-	private boolean checkKingOtherEating(int from_x, int from_y, int to_x, int to_y){
+	boolean checkKingOtherEating(int from_x, int from_y, int to_x, int to_y){
 		checker anotherColor = getAnotherColor(getFieldType(from_x, from_y));
 		int on_x=normal(to_x-from_x), on_y=normal(to_y-from_y);
 		int x=from_x, y=from_y;
@@ -266,7 +266,7 @@ public class GameSession{
 		return ((myColor==checker.black)&&(y==0))||((myColor==checker.white)&&(y==settings.getFieldSize()-1));
 	}
 
-	private boolean fieldIsKing(int x, int y) {
+	boolean fieldIsKing(int x, int y) {
 		return currentPositions[y][x].isKing();
 	}
 
@@ -444,7 +444,7 @@ public class GameSession{
 		return (getFieldType(from_x+on_x,from_y+on_y)==anotherColor)&&fieldIsEmpty(to_x,to_y);
 	}
 	
-	private boolean eating(int from_x, int from_y, int to_x, int to_y){
+	boolean eating(int from_x, int from_y, int to_x, int to_y){
 		if((abs(from_x-to_x)<2)||(abs(from_y-to_y)<2))
 			return false;
 		if(fieldIsKing(from_x, from_y))
