@@ -1,6 +1,8 @@
 package frontend;
 
 import base.MessageSystem;
+import base.UserData;
+import chat.ChatWSImpl;
 import com.sun.java.swing.plaf.motif.resources.motif;
 import com.sun.java.swing.plaf.motif.resources.motif_zh_CN;
 import dbService.UserDataSet;
@@ -10,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -55,6 +58,22 @@ public class UserDataImplTest {
         try { th.sleep(0); }
         catch (InterruptedException e) {}
 
+    }
+
+    @Test
+    public void partyEndTest() throws NoSuchFieldException, IllegalAccessException {
+        Map<String, ChatWSImpl> sessionIdToChatWS = new HashMap<String,ChatWSImpl>();
+
+        MessageSystem ms = mock(MessageSystem.class);
+        UserDataImpl userData1 = new UserDataImpl(ms);
+        userData1.putSessionIdAndChatWS("1",new ChatWSImpl());
+        userData1.putSessionIdAndChatWS("2",new ChatWSImpl());
+        try {
+            userData1.partyEnd(1,2);
+        }
+        catch (Exception e) {
+            Assert.assertTrue(false); //Проверка на выброс эксепшена
+        }
     }
 
 //    @Test

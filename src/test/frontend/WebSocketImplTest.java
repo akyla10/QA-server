@@ -216,6 +216,33 @@ public class WebSocketImplTest  {
     }
 
     @Test
+    public void onWebSocketTextSessionIdNull() throws ParseException {
+        WebSocketImpl webSocket = new WebSocketImpl(false);
+        MessageSystem messageSystem = mock(MessageSystem.class);
+        Abonent abonent = mock(Abonent.class);
+
+        WebSocketImpl spy = spy(webSocket);
+        spy.setMS(messageSystem);
+
+        when(spy.parse(anyString())).thenAnswer(new Answer() {
+            public Object answer(InvocationOnMock invocation) {
+                JSONObject jsObject = mock(JSONObject.class);
+                when(jsObject.get("sessionId")).thenReturn(null);
+                when(jsObject.get("startServerTime")).thenReturn(UserDataImpl.getStartServerTime());
+                when(jsObject.get("from_x")).thenReturn("1");
+                when(jsObject.get("from_y")).thenReturn("1");
+                when(jsObject.get("to_x")).thenReturn("1");
+                when(jsObject.get("to_y")).thenReturn("1");
+                when(jsObject.get("status_y")).thenReturn("1");
+                return jsObject;
+            }
+        });
+        when(spy.isNotConnected()).thenReturn(Boolean.FALSE);
+        spy.onWebSocketText("opop");
+        verify(spy, never() ).checkStroke(anyString(),anyInt(),anyInt(),anyInt(),anyInt(),anyString());
+    }
+
+    @Test
     public void test6() throws ParseException {
         WebSocketImpl webSocket = new WebSocketImpl(false);
         MessageSystem messageSystem = mock(MessageSystem.class);
@@ -262,8 +289,8 @@ public class WebSocketImplTest  {
         WebSocketImpl webSocket =  new WebSocketImpl(false);
         WebSocketImpl spy = spy(webSocket);
         Map<String, String> usersToColors = new HashMap<String, String>();
-        usersToColors.put("id1", "w");
-        usersToColors.put("id2", "b");
+        usersToColors.put("id1", "white");
+        usersToColors.put("id2", "black");
         webSocket.updateUsersColor(usersToColors);
 //        to do
     }

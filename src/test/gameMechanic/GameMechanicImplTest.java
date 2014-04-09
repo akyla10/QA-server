@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import static gameClasses.Field.checker.black;
 import static gameClasses.Field.checker.white;
 import static org.mockito.Matchers.shortThat;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by anton on 4/2/14.
@@ -222,4 +222,25 @@ public class GameMechanicImplTest {
         return result;
     }
 
+    @Test
+    public void removeDeadGames2Test() throws NoSuchFieldException, IllegalAccessException {
+        MessageSystem ms = mock(MessageSystem.class);
+        GameMechanicImpl gameMechanic = new GameMechanicImpl(ms);
+
+        Map<Integer,GameSession> userIdToSession= new HashMap<Integer,GameSession>();
+        userIdToSession.put(1, null);
+        GameSession session = mock(GameSession.class);
+        when(session.getWinnerId()).thenReturn(1);
+        userIdToSession.put(2, session);
+
+        java.lang.reflect.Field field =  gameMechanic.getClass().getDeclaredField("userIdToSession");
+        field.setAccessible(true);
+        field.set(gameMechanic,userIdToSession );
+
+        GameMechanicImpl gameMechanicSpy = spy(gameMechanic);
+
+        gameMechanicSpy.removeDeadGames();
+
+        verify(gameMechanicSpy, atLeast(1)).removeDeadGames();
+    }
 }
