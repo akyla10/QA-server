@@ -2,6 +2,7 @@ package frontend;
 
 import base.Abonent;
 import base.MessageSystem;
+import base.UserData;
 import base.WebSocket;
 import com.sun.corba.se.impl.corba.AnyImpl;
 import dbService.UserDataSet;
@@ -9,12 +10,14 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import netscape.javascript.JSObject;
 import org.apache.tools.ant.types.resources.First;
+import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -239,7 +242,7 @@ public class WebSocketImplTest  {
         });
         when(spy.isNotConnected()).thenReturn(Boolean.FALSE);
         spy.onWebSocketText("opop");
-        verify(spy, never() ).checkStroke(anyString(),anyInt(),anyInt(),anyInt(),anyInt(),anyString());
+        verify(spy, never() ).checkStroke(anyString(), anyInt(), anyInt(), anyInt(), anyInt(), anyString());
     }
 
     @Test
@@ -285,14 +288,27 @@ public class WebSocketImplTest  {
      }
 
     @Test
-    public void updateUsersColorTest() {
+    public void updateUsersColorTest() throws NoSuchFieldException, IOException {
         WebSocketImpl webSocket =  new WebSocketImpl(false);
+        UserDataImpl userData1 = mock(UserDataImpl.class);
+        UserDataImpl userData2 = mock(UserDataImpl.class);
+        WebSocketImpl webSocket1 = mock(WebSocketImpl.class);
+        WebSocketImpl webSocket2 = mock(WebSocketImpl.class);
+
+        UserDataSet userDataSet1 = mock(UserDataSet.class);
+        UserDataSet userDataSet2 = mock(UserDataSet.class);
+
+        RemoteEndpoint remoteEndpoint1 = mock(RemoteEndpoint.class);
+
+        UserDataImpl.putLogInUser("id1", userDataSet1);
+        UserDataImpl.putLogInUser("id2", userDataSet2);
         WebSocketImpl spy = spy(webSocket);
+        when(spy.getWSBySessionId(anyString())).thenReturn( remoteEndpoint1);
         Map<String, String> usersToColors = new HashMap<String, String>();
         usersToColors.put("id1", "white");
         usersToColors.put("id2", "black");
-        webSocket.updateUsersColor(usersToColors);
-//        to do
+        spy.updateUsersColor(usersToColors);
+        verify(spy,atLeastOnce()).getWSBySessionId(anyString());
     }
 
     @Test

@@ -40,10 +40,9 @@ public class SysInfoTest {
         System.out.println(testFileContent);
 
         Assert.assertTrue(f.exists());
-        TimeHelper.sleep(10000);
+        TimeHelper.sleep(1200);
 
         Assert.assertFalse(testFileContent.equals(VFS.readFile(f.getPath())));
-
     }
 
     @Test

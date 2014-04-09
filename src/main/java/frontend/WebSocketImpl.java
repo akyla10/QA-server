@@ -2,6 +2,7 @@ package frontend;
 
 import java.util.Map;
 
+import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -131,11 +132,13 @@ public class WebSocketImpl  extends WebSocketAdapter implements WebSocket{
 				color=usersToColors.get(sessionId);
 				if(color=="black"){
 					userSession.setColor("b");
-					UserDataImpl.getWSBySessionId(sessionId).sendString(black);
+                    RemoteEndpoint remoteEndpoint = getWSBySessionId(sessionId);
+                    remoteEndpoint.sendString(black);
 				}
 				else if(color=="white"){
 					userSession.setColor("w");
-					UserDataImpl.getWSBySessionId(sessionId).sendString(white);
+                    RemoteEndpoint remoteEndpoint = getWSBySessionId(sessionId);
+                    remoteEndpoint.sendString(white);
 				}
 			}
 			catch(Exception e){
@@ -145,6 +148,10 @@ public class WebSocketImpl  extends WebSocketAdapter implements WebSocket{
 			}
 		}
 	}
+
+    RemoteEndpoint getWSBySessionId(String sessionId) {
+        return UserDataImpl.getWSBySessionId(sessionId);
+    }
 
 	public void doneSnapshot(int userId, Snapshot snapshot) {
 		String sessionId = UserDataImpl.getSessionIdByUserId(userId);
