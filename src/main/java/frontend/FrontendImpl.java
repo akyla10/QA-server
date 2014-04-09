@@ -157,7 +157,7 @@ public class FrontendImpl extends AbstractHandler implements Frontend{
 		}
 	}
 
-	private void onHaveCookieAndPostStatus(String target, String sessionId,UserDataSet userSession,HttpServletRequest request, HttpServletResponse response){
+	boolean onHaveCookieAndPostStatus(String target, String sessionId, UserDataSet userSession, HttpServletRequest request, HttpServletResponse response){
 		String nick=request.getParameter("nick");
 		String password = request.getParameter("password");
 		if ((nick==null)||(password==null)){
@@ -176,6 +176,7 @@ public class FrontendImpl extends AbstractHandler implements Frontend{
 				MsgAddUser msg=new MsgAddUser(from,to,sessionId,nick,password);
 				messageSystem.putMsg(to, msg);
 			}
+            return false;
 		}
 		else{
 			password=SHA2.getSHA2(password);
@@ -186,6 +187,7 @@ public class FrontendImpl extends AbstractHandler implements Frontend{
 			Address from=messageSystem.getAddressByName("UserData");
 			MsgGetUser msg=new MsgGetUser(from,to,sessionId,nick,password);
 			messageSystem.putMsg(to, msg);
+            return true;
 		}
 	}
 

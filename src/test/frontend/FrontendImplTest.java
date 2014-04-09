@@ -190,7 +190,7 @@ public class FrontendImplTest  {
         HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
         Assert.assertEquals(
                 "index.html",
-                frontend1.onHaveCookieStatus("/", new UserDataSet(), httpServletResponse)
+                frontend1.onReadyStatus("/", "2", new UserDataSet(), httpServletResponse)
         );
     }
 
@@ -226,13 +226,184 @@ public class FrontendImplTest  {
                 frontend1.onReadyStatus("/profile","2", new UserDataSet(), httpServletResponse)
         );
     }
+
     @Test
     public void onReadyStatusElseTest(){
         MessageSystem ms = mock(MessageSystem.class);
         FrontendImpl frontend1 = new FrontendImpl(ms);
         HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
         Assert.assertNull(
-                frontend1.onReadyStatus("opopop",",", new UserDataSet(), httpServletResponse)
+                frontend1.onReadyStatus("opopop", ",", new UserDataSet(), httpServletResponse)
+        );
+    }
+
+    @Test
+    public void onHaveCookieAndPostStatusTest(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
+
+        when(httpServletRequest.getParameter("password")).thenReturn("p");
+        when(httpServletRequest.getParameter("nick")).thenReturn("n");
+        when(request.getParameter("regNick")).thenReturn("n");
+        when(request.getParameter("regPassword")).thenReturn("n");
+
+        Assert.assertTrue(
+            frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
+        );
+    }
+
+    @Test
+    public void onHaveCookieAndPostStatus1Test(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
+
+        when(httpServletRequest.getParameter("password")).thenReturn(null);
+        when(httpServletRequest.getParameter("nick")).thenReturn("n");
+        when(request.getParameter("regNick")).thenReturn("n");
+        when(request.getParameter("regPassword")).thenReturn("n");
+
+        Assert.assertFalse(
+            frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
+        );
+    }
+
+    @Test
+    public void onHaveCookieAndPostStatus2Test(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
+
+        when(httpServletRequest.getParameter("password")).thenReturn("p");
+        when(httpServletRequest.getParameter("nick")).thenReturn(null);
+        when(request.getParameter("regNick")).thenReturn("n");
+        when(request.getParameter("regPassword")).thenReturn("n");
+
+        Assert.assertFalse(
+            frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
+        );
+    }
+
+    @Test
+    public void onHaveCookieAndPostStatus3Test(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
+
+        when(httpServletRequest.getParameter("password")).thenReturn(null);
+        when(httpServletRequest.getParameter("nick")).thenReturn(null);
+        when(request.getParameter("regNick")).thenReturn("n");
+        when(request.getParameter("regPassword")).thenReturn("n");
+
+        Assert.assertFalse(
+            frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
+        );
+    }
+
+    @Test
+    public void onHaveCookieAndPostStatus4Test(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
+
+        when(httpServletRequest.getParameter("password")).thenReturn(null);
+        when(httpServletRequest.getParameter("nick")).thenReturn(null);
+        when(request.getParameter("regNick")).thenReturn("n");
+        when(request.getParameter("regPassword")).thenReturn("n");
+
+        Assert.assertFalse(
+            frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
+        );
+    }
+
+    @Test
+    public void onHaveCookieAndPostStatus5Test(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
+
+        when(httpServletRequest.getParameter("password")).thenReturn(null);
+        when(httpServletRequest.getParameter("nick")).thenReturn(null);
+        when(request.getParameter("regNick")).thenReturn(null);
+        when(request.getParameter("regPassword")).thenReturn("n");
+
+        Assert.assertFalse(
+            frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
+        );
+    }
+
+    @Test
+    public void onHaveCookieAndPostStatus6Test(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
+
+        when(httpServletRequest.getParameter("password")).thenReturn(null);
+        when(httpServletRequest.getParameter("nick")).thenReturn(null);
+        when(request.getParameter("regNick")).thenReturn("");
+        when(request.getParameter("regPassword")).thenReturn(null);
+
+        Assert.assertFalse(
+            frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
+        );
+    }
+
+    @Test
+    public void onHaveCookieAndPostStatus7Test(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
+
+        when(httpServletRequest.getParameter("password")).thenReturn(null);
+        when(httpServletRequest.getParameter("nick")).thenReturn(null);
+        when(request.getParameter("regNick")).thenReturn("");
+        when(request.getParameter("regPassword")).thenReturn(null);
+
+        Assert.assertFalse(
+            frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
+        );
+    }
+
+    @Test
+    public void onHaveCookieAndPostStatus8Test(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
+
+        when(httpServletRequest.getParameter("password")).thenReturn(null);
+        when(httpServletRequest.getParameter("nick")).thenReturn(null);
+        when(request.getParameter("regNick")).thenReturn("4");
+        when(request.getParameter("regPassword")).thenReturn("44");
+
+        Assert.assertFalse(
+            frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
+        );
+    }
+
+    @Test
+    public void onHaveCookieAndPostStatus9Test(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
+
+        when(httpServletRequest.getParameter("password")).thenReturn(null);
+        when(httpServletRequest.getParameter("nick")).thenReturn(null);
+        when(request.getParameter("regNick")).thenReturn("4rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+        when(request.getParameter("regPassword")).thenReturn("44");
+
+        Assert.assertFalse(
+            frontend1.onHaveCookieAndPostStatus("opopop", ",", new UserDataSet(),httpServletRequest, httpServletResponse)
         );
     }
 }
