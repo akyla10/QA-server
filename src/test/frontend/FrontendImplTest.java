@@ -181,6 +181,58 @@ public class FrontendImplTest  {
         System.out.println(newSession);
         putSessionIdAndUserSession(newSession, new UserDataSet());
         System.out.println(getUserSessionBySessionId(newSession).getId());
+    }
 
+    @Test
+    public void  onReadyStatusTest(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        Assert.assertEquals(
+                "index.html",
+                frontend1.onHaveCookieStatus("/", new UserDataSet(), httpServletResponse)
+        );
+    }
+
+    @Test
+    public void  onReadyStatusGameTest(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        Assert.assertEquals(
+                "game.html",
+                frontend1.onReadyStatus("/game", "e", new UserDataSet(), httpServletResponse)
+        );
+    }
+
+    @Test
+    public void onReadyStatusLogoutTest(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        Assert.assertEquals(
+                "/",
+                frontend1.onReadyStatus("/logout", "e", new UserDataSet(), httpServletResponse)
+        );
+    }
+
+    @Test
+    public void onReadyStatusProfileTest(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        Assert.assertEquals(
+                "profile.html",
+                frontend1.onReadyStatus("/profile","2", new UserDataSet(), httpServletResponse)
+        );
+    }
+    @Test
+    public void onReadyStatusElseTest(){
+        MessageSystem ms = mock(MessageSystem.class);
+        FrontendImpl frontend1 = new FrontendImpl(ms);
+        HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+        Assert.assertNull(
+                frontend1.onReadyStatus("opopop",",", new UserDataSet(), httpServletResponse)
+        );
     }
 }

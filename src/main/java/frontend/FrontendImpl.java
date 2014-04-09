@@ -193,15 +193,17 @@ public class FrontendImpl extends AbstractHandler implements Frontend{
 		sendPage("wait.html",null,response);
 	}
 
-	private void onReadyStatus(String target, String sessionId, UserDataSet userSession,HttpServletResponse response){
+	String onReadyStatus(String target, String sessionId, UserDataSet userSession,HttpServletResponse response){
 		if(target.equals("/")){
 			UserDataImpl.putLogInUser(sessionId, userSession);
-			sendPage("index.html",userSession,response);			
+			sendPage("index.html",userSession,response);
+            return "index.html";
 		}
 		else if (target.equals("/game")){
 			UserDataImpl.putLogInUser(sessionId, userSession);
 			UserDataImpl.playerWantToPlay(sessionId, userSession);
 			sendPage("game.html",userSession,response);
+            return  "game.html";
 		}
 		else if(target.equals("/logout")){
 			response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
@@ -210,13 +212,16 @@ public class FrontendImpl extends AbstractHandler implements Frontend{
 			Cookie cookie=new Cookie("sessionId", strSessionId);
 			response.addCookie(cookie);
 			UserDataImpl.putSessionIdAndUserSession(sessionId, new UserDataSet());
+            return "/";
 		}
 		else if (target.equals("/profile")){
 			sendPage("profile.html",userSession,response);
+            return "profile.html";
 		}
 		else{
 			response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
 			response.addHeader("Location", "/");
+            return null;
 		}
 	}
 
