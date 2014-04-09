@@ -48,10 +48,10 @@ public class WebSocketImpl  extends WebSocketAdapter implements WebSocket{
 		String sessionId=null,startServerTime=null;
 		int from_x=-1, from_y=-1, to_x=-1, to_y=-1;
 		String status=null;
-		JSONParser parser = new JSONParser();
+//		JSONParser parser = new JSONParser();
 		JSONObject json=null;
 		try{
-			json = (JSONObject) parser.parse(message);
+			json =  parse(message);
 			sessionId=json.get("sessionId").toString();
 			startServerTime=json.get("startServerTime").toString();
 			from_x=Integer.parseInt(json.get("from_x").toString());
@@ -59,8 +59,6 @@ public class WebSocketImpl  extends WebSocketAdapter implements WebSocket{
 			to_x=Integer.parseInt(json.get("to_x").toString());
 			to_y=Integer.parseInt(json.get("to_y").toString());
 			status=json.get("status").toString();
-		}
-		catch (ParseException parseException) {
 		}
 		catch (Exception ignor){
 		}
@@ -73,7 +71,17 @@ public class WebSocketImpl  extends WebSocketAdapter implements WebSocket{
 		}
 	}
 
-	private void addNewWS(String sessionId){
+    JSONObject parse(String message) {
+        JSONParser parser = new JSONParser();
+        try {
+            return (JSONObject) parser.parse(message);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+	void addNewWS(String sessionId){
 		UserDataSet userSession = UserDataImpl.getLogInUserBySessionId(sessionId);
 		if(userSession!=null){
 			userSession.visit();
@@ -81,7 +89,7 @@ public class WebSocketImpl  extends WebSocketAdapter implements WebSocket{
 		}
 	}
 
-	private void checkStroke(String sessionId, int to_x, int to_y, int from_x, int from_y, String status){
+	void checkStroke(String sessionId, int to_x, int to_y, int from_x, int from_y, String status){
 		Stroke stroke=new Stroke(to_x,to_y,from_x,from_y,status);
 		UserDataSet userSession = UserDataImpl.getLogInUserBySessionId(sessionId);
 		userSession.visit();
