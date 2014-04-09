@@ -204,8 +204,25 @@ public class WebSocketImplTest extends TestCase {
         });
         when(spy.isNotConnected()).thenReturn(Boolean.FALSE);
         spy.onWebSocketText("opop");
-        verify(spy, never()).checkStroke(anyString(),anyInt(),anyInt(),anyInt(),anyInt(),anyString());
+        verify(spy, never()).checkStroke(anyString(), anyInt(), anyInt(), anyInt(), anyInt(), anyString());
         verify(spy, never()).addNewWS(anyString());
+    }
+
+    @Test
+    public void test7() throws ParseException {
+        WebSocketImpl webSocket = new WebSocketImpl(true);
+        MessageSystem messageSystem = mock(MessageSystem.class);
+        Abonent abonent = mock(Abonent.class);
+
+        WebSocketImpl spy = spy(webSocket);
+        spy.setMS(messageSystem);
+        when(spy.isNotConnected()).thenReturn(Boolean.TRUE);
+        verify(spy, never()).checkStroke(anyString(), anyInt(), anyInt(), anyInt(), anyInt(), anyString());
+        verify(spy, never()).addNewWS(anyString());
+     }
+    
+    @Test
+    public  void testConstructor() {
     }
 
 }
