@@ -81,12 +81,14 @@ public class WebSocketImpl  extends WebSocketAdapter implements WebSocket{
         }
     }
 
-	void addNewWS(String sessionId){
+	Boolean addNewWS(String sessionId){
 		UserDataSet userSession = UserDataImpl.getLogInUserBySessionId(sessionId);
 		if(userSession!=null){
 			userSession.visit();
 			UserDataImpl.putSessionIdAndWS(sessionId, this);
+            return true;
 		}
+        return false;
 	}
 
 	void checkStroke(String sessionId, int to_x, int to_y, int from_x, int from_y, String status){
